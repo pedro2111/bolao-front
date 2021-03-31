@@ -1,0 +1,78 @@
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <ul class="breadcrumb breadcrumb-style ">
+                        <li class="breadcrumb-item">
+                            <h4 class="page-title">Bolões</h4>
+                        </li>
+                        <li class="breadcrumb-item bcrumb-1">
+                            <a routerLink="/bolao">
+                                <i class="fas fa-home"></i> Home</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                <div class="mb-5">
+                    <h3 class="text-primary">Bolões</h3>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-12 d-flex flex-column">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Pesquisar...</mat-label>
+                            <input matInput (keyup)="pesquisar($event)"> 
+                          </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 mb-5" *ngFor="let bolao of boloes | paginate: { itemsPerPage: 4, currentPage: p, totalItems:totalElementos}"  >
+                        
+                        <mat-card class="example-card">
+                            <mat-card-header style="display: block !important;">
+                                <mat-card-title class="font-card-title">{{(bolao.nome.length > 20)?  (bolao.nome | slice:0:20)+'...' : bolao.nome}} </mat-card-title>
+                                <mat-card-subtitle>{{bolao.nomeCampeonato}}</mat-card-subtitle>
+      
+                            </mat-card-header>
+
+                            <mat-card-content>                                
+                                <img *ngIf="bolao.url == 'na' " class="m-0 mb-2 img-fluid" style="max-height: 256px; min-height: 182px;" mat-card-image src="assets/images/logo-bolao.png" alt="{{bolao.nome}}">
+                                <img *ngIf="bolao.url != 'na' " class="m-0 mb-2 img-fluid" style="max-height: 256px; min-height: 182px;" mat-card-image src="{{bolao.url}}" alt="{{bolao.nome}}">
+                            </mat-card-content>                           
+                
+                            <mat-divider role="separator" class="mat-divider mat-divider-horizontal" aria-orientation="horizontal"></mat-divider>
+
+                            <mat-card-actions>
+                                <div fxLayout="row">
+                                    <button mat-stroked-button class="btn btn-outline-info mr-2">Espiar</button>          
+                                    <span fxFlex></span>
+                                    <button *ngIf="bolao.tipoBolao == 'PRIVADO' " mat-stroked-button class="btn btn-outline-success" matTooltip="Este Bolão é Privado! Aguarde a aprovação do administrador.">Participar</button>
+                                    <button *ngIf="bolao.tipoBolao == 'LIVRE' " mat-stroked-button class="btn btn-outline-success" matTooltip="Este Bolão é livre!">Participar</button>
+                                  </div>
+                            </mat-card-actions>
+                        </mat-card>
+                    </div>
+                    <div *ngIf="boloes.length === 0" class="col-xs-12 col-sm-3 col-md-3 col-lg-3 mb-5">
+                        Opsss! Tente novamente!
+
+                    </div>
+                    
+
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div>
+                        <pagination-controls class="pagination pagination-sm no-margin pull-right"
+                            (pageChange)="p = $event" (pageChange)="getPage($event)" previousLabel="Anterior"
+                            nextLabel="Próximo"> </pagination-controls>
+                    </div>
+                
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
