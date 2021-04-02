@@ -157,7 +157,7 @@ export class NovoCampeonatoComponent implements OnInit {
 
     this.campeonatoService.cadastrarTimes(campeonato).subscribe(
       (res) => {
-        this.notificationService.showNotification('snackbar-success', 'Times adcionados com sucesso', 'top', 'right');
+        this.notificationService.showNotification('snackbar-success', 'Times adicionados com sucesso', 'top', 'right');
         setTimeout(()=>{
           this.router.navigate(['/administracao/campeonato']);
         },2000)

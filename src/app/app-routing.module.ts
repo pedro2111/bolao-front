@@ -12,11 +12,6 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '/authentication/login', pathMatch: 'full' },
       {
-        path: 'dashboard',
-        loadChildren: () =>
-          import('./dashboard/dashboard.module').then((m) => m.DashboardModule)
-      },
-      {
         path: 'extra-pages',
         loadChildren: () =>
           import('./extra-pages/extra-pages.module').then(
@@ -42,13 +37,6 @@ const routes: Routes = [
         loadChildren: () =>
           import('./bolao/bolao.module').then(
             (m) => m.BolaoModule
-          )
-      },
-      {
-        path: 'multilevel',
-        loadChildren: () =>
-          import('./multilevel/multilevel.module').then(
-            (m) => m.MultilevelModule
           )
       }
     ]

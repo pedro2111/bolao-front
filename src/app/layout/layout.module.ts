@@ -40,7 +40,7 @@ export function createTranslateLoader(http: HttpClient): any {
       }
     }),
   ],
-  declarations: [AuthLayoutComponent, HeaderComponent, RightSidebarComponent],
+  declarations: [AuthLayoutComponent, RightSidebarComponent],
   providers: [  
     {
       provide: PERFECT_SCROLLBAR_CONFIG,

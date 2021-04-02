@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', res['token']);
         localStorage.setItem('usuario', usuario.email);
         this.error = false;
-        this.router.navigate(['/dashboard/main']);
+        this.router.navigate(['/bolao']);
 
       }, (err) => {
         console.log(err);
