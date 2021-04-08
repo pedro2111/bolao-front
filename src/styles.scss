@@ -4,3 +4,10 @@
 .font-card-title{
     font-size: 0.5em;
 }
+th.mat-header-cell { 
+    text-align: center !important;
+}
+.mat-table{
+    max-height: 100px !important;
+    overflow: hidden;
+}

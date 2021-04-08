@@ -20,11 +20,13 @@ import { MatAutocompleteModule} from '@angular/material/autocomplete';
 import { NovoCampeonatoComponent } from './campeonato/novo-campeonato/novo-campeonato.component';
 import { HomeCampeonatoComponent } from './campeonato/home-campeonato/home-campeonato.component';
 import { FinalizarCampeonatoComponent } from './campeonato/finalizar-campeonato/finalizar-campeonato.component';
+import { HomeTimeComponent } from './time/home-time/home-time.component';
+import { NovoTimeComponent } from './time/novo-time/novo-time.component';
 
 
 
 @NgModule({
-  declarations: [HomeCampeonatoComponent, NovoCampeonatoComponent, FinalizarCampeonatoComponent],
+  declarations: [HomeCampeonatoComponent, NovoCampeonatoComponent, FinalizarCampeonatoComponent, HomeTimeComponent, NovoTimeComponent],
   imports: [
     CommonModule,
     AdministracaoRoutingModule,

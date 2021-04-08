@@ -3,5 +3,6 @@ export class Time{
     nome:String;
     nomeUsuario:String;
     dtCriacao:Date;
+    url:String;
 
 }

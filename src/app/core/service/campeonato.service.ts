@@ -69,4 +69,16 @@ export class CampeonatoService {
     return this.http.put(`${environment.apiUrl}/campeonatos/${campeonato_id}`, campeonato, httpOptions);
   }
  
+  public finalizarCampeonato (campeonato_id, campeonato:Campeonato){
+
+    let headers: HttpHeaders = new HttpHeaders()
+    headers.append('Content-type', 'application/json');
+
+    const httpOptions = {
+      headers: headers
+    }
+    
+    return this.http.put(`${environment.apiUrl}/campeonatos/${campeonato_id}/atualizar-palpite-extra`, campeonato, httpOptions);
+  }
+ 
 }

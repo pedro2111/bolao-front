@@ -17,4 +17,9 @@ export class Campeonato{
     url:string;
     times_id:Number[];
     times:Time[];
+    //formDto
+    campeao_id:number;
+    vice_id:number;
+    terceiro_id:number;
+    quarto_id:number;
 }

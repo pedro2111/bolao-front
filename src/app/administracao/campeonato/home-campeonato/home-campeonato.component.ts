@@ -17,6 +17,7 @@ export class HomeCampeonatoComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
     'nome',
+    'status',
     'actionsColumn'
   ];
   constructor(

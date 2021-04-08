@@ -19,18 +19,18 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
       },
       {
-        path: 'dashboard/dashboard2',
+        path: 'administracao/bolao',
         title: 'Bolão',
-        moduleName: 'dashboard',
+        moduleName: 'administracao',
         icon: '',
         class: 'ml-menu',
         groupTitle: false,
         submenu: []
       },
       {
-        path: 'dashboard/dashboard3',
-        title: 'Jogo',
-        moduleName: 'dashboard',
+        path: 'administracao/time',
+        title: 'Time',
+        moduleName: 'administracao',
         icon: '',
         class: 'ml-menu',
         groupTitle: false,
