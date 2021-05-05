@@ -11,3 +11,81 @@ th.mat-header-cell {
     max-height: 100px !important;
     overflow: hidden;
 }
+.size-img-time{
+    width: 45px; 
+    height: 45px;
+}
+
+
+@media (max-width: 575px) { 
+    .fill-sm{
+        flex: 1 1 auto;
+    }
+    .flex-direction-sm-collum{
+        flex-direction: column;
+    }
+    .align-form{
+        -ms-flex-align: center;
+        -ms-flex-item-align: center;
+    }
+    
+ }
+ @media (min-width: 600px) { 
+     .w-title-criterio{
+         width: 10% !important;
+     }
+
+ }
+ section.conteudo::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background: url('assets/images/section-backgroud.jpeg');
+    background-size: cover;
+
+ }
+ section.conteudo2::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 250px;
+    background: url('assets/images/section2-background.jpeg');
+    background-size: cover;
+
+ }
+ section-h3-mt{
+     margin-top: 50px !important;
+ }
+ section-cards-mt{
+    margin-top: 40px !important;
+ }
+ .mat-form-field.ng-dirty.ng-valid .mat-form-field-label {
+    caret-color: green !important;
+  }
+ 
+ .breadcrumb li a{
+    color:white !important;
+  }
+ .breadcrumb .page-title{
+    color:white !important;
+  }
+ .breadcrumb li a .fa-home{
+    color:white !important;
+}
+.theme-black .breadcrumb li a{
+    color:white !important;
+}
+.exemplo-title{
+    color: #32CD32;
+    text-align:center !important;
+    font-weight: bold;
+}
+.exemplo-jogo{
+    color: #4169E1;
+    font-weight: bold;
+}

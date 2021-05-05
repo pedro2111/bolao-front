@@ -1,0 +1,145 @@
+<section class="content conteudo2">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <ul class="breadcrumb breadcrumb-style ">
+                        <li class="breadcrumb-item">
+                            <h4 class="page-title">Jogo</h4>
+                        </li>
+                        <li class="breadcrumb-item bcrumb-1">
+                            <a routerLink="/admin/dashboard/main">
+                                <i class="fas fa-home"></i> Home</a>
+                        </li>
+                        <li class="breadcrumb-item bcrumb-2">
+                            <a href="#" onClick="return false;">Jogo</a>
+                        </li>
+                        <li class="breadcrumb-item active">Novo jogo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="margin-top: 140px;">
+                <div class="card">
+                    <div class="header">
+                        <h2>Novo Jogo</h2>
+                    </div>
+                    <div class="body">
+                        <form class="m-4" [formGroup]="form" (ngSubmit)="cadastrar()">
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Campeonato</mat-label>
+                                        <mat-select formControlName="campeonato_id" required>
+                                            <mat-option *ngFor="let camp of campeonatos" [value]="camp.id">
+                                                {{camp.nome}}
+                                            </mat-option>
+
+                                        </mat-select>
+                                        <mat-error *ngIf="form.get('campeonato_id').hasError('required')">
+                                            Campeonato é obrigatório
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6  col-md-12 col-sm-12 mb-3">                                    
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Rodada</mat-label>
+                                        <input matInput formControlName="rodada" placeholder="ex: 1 ou quartas de final "/>
+                                        <mat-error *ngIf="form.get('rodada').hasError('required')">
+                                            Rodada é obrigatório
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Local</mat-label>
+                                        <input matInput formControlName="local" placeholder="ex: nome do estadio - cidade "/> 
+                                        <mat-error *ngIf="form.get('local').hasError('required')">
+                                            Local é obrigatório
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-5 col-lg-5  col-md-12 col-sm-12 mb-3">
+                                    <div *ngIf="loadingTime" class="preloader pl-size-xs">
+                                        <div class="spinner-layer pl-indigo">
+                                            <div class="circle-clipper left">
+                                                <div class="circle"></div>
+                                            </div>
+                                            <div class="circle-clipper right">
+                                                <div class="circle"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <mat-form-field *ngIf="!loadingTime" class="example-full-width">
+                                        <mat-label>Time Casa</mat-label>
+                                        <mat-select formControlName="time1_id" required>
+                                            <mat-option *ngFor="let time of times" [value]="time.id">
+                                                {{time.nome}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="form.get('time1_id').hasError('required')">
+                                            Time Casa é obrigatório
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mb-3 d-flex align-items-center justify-content-center">
+                                    VS
+                                </div>
+
+                                <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 mb-3">
+                                    <div *ngIf="loadingTime" class="preloader pl-size-xs">
+                                        <div class="spinner-layer pl-indigo">
+                                            <div class="circle-clipper left">
+                                                <div class="circle"></div>
+                                            </div>
+                                            <div class="circle-clipper right">
+                                                <div class="circle"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <mat-form-field *ngIf="!loadingTime" class="example-full-width">
+                                        <mat-label>Time Fora</mat-label>
+                                        <mat-select formControlName="time2_id" required>
+                                            <mat-option *ngFor="let time of times" [value]="time.id">
+                                                {{time.nome}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="form.get('time2_id').hasError('required')">
+                                            Time Casa é obrigatório
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Data e hora</mat-label>
+                                        <span matPrefix>
+                                            <mat-icon class="mr-2">date_range</mat-icon>
+                                        </span>
+                                        <input matInput formControlName="dtJogo" placeholder="EX: 10-07-2021 11:05 "
+                                            [dropSpecialCharacters]="false" mask="00-00-0000 00:00" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                                    <button class="mr-3" [disabled]="!form.valid" mat-raised-button
+                                        color="primary">Salvar</button>
+                                    <button type="button" mat-button
+                                        [routerLink]="['/administracao/jogo']">Voltar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

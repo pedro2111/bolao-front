@@ -1,23 +1,31 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { BolaoRoutingModule } from './bolao-routing.module';
 import { HomeBolaoComponent } from './home-bolao/home-bolao.component';
-import { MatCardModule } from '@angular/material/card';
+import { DetalheBolaoComponent } from './detalhe-bolao/detalhe-bolao.component';
 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule} from '@angular/material/button';
 import { MatDividerModule} from '@angular/material/divider';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTableModule} from '@angular/material/table';
+import { MatSelectModule} from '@angular/material/select';
+import { MatAutocompleteModule} from '@angular/material/autocomplete';
+import { NgxMaskModule } from 'ngx-mask';
+import { MatRadioModule} from '@angular/material/radio';
+import { MatTabsModule } from '@angular/material/tabs';
+
 
 
 @NgModule({
-  declarations: [ HomeBolaoComponent],
+  declarations: [ HomeBolaoComponent, DetalheBolaoComponent],
   imports: [
     CommonModule,
     BolaoRoutingModule,
@@ -30,7 +38,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
-    MatFormFieldModule
+    MatFormFieldModule,  
+    MatTableModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    NgxMaskModule,
+    MatRadioModule,
+    MatCardModule,
+    MatTabsModule
 
 
   ]

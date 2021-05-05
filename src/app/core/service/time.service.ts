@@ -13,13 +13,18 @@ export class TimeService {
   public listarTimes (nomeTime?:String){
     
     if(nomeTime == null){
-      return this.http.get<Time[]>(`${environment.apiUrl}/times/listarTodosTimes` );
+      return this.http.get<Time[]>(`${environment.apiUrl}/times/listarTodosTimes`);
 
     }else{
       return this.http.get<Time[]>(`${environment.apiUrl}/times/listarTodosTimes?nome=${nomeTime}` );
 
     }
     
+  }
+
+  public listarTimeById(id){
+
+    return this.http.get(`${environment.apiUrl}/times/${id}`);
   }
 
   public cadastrar (time:Time){
@@ -37,6 +42,19 @@ export class TimeService {
   public uploadCapaTime(formData:FormData){
 
     return this.http.put(`${environment.apiUrl}/times/upload-imagem`, formData);
+
+  }
+
+  public atualizar (id, time:Time){
+
+    let headers: HttpHeaders = new HttpHeaders()
+    headers.append('Content-type', 'application/json');
+
+    const httpOptions = {
+      headers: headers
+    }
+
+    return this.http.put(`${environment.apiUrl}/times/${id}`, time, httpOptions);
 
   }
 }

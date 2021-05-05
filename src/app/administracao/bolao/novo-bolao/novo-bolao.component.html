@@ -1,0 +1,243 @@
+<section class="content conteudo2">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <ul class="breadcrumb breadcrumb-style ">
+                        <li class="breadcrumb-item">
+                            <h4 class="page-title">Administração</h4>
+                        </li>
+                        <li class="breadcrumb-item bcrumb-1">
+                            <a [routerLink]="['/administracao/time']">
+                                <i class="fas fa-home"></i> Home</a>
+                        </li>
+                        <li class="breadcrumb-item bcrumb-2">
+                            <a href="#" [routerLink]="['/administracao/campeonato']">Bolão</a>
+                        </li>
+                        <li class="breadcrumb-item active">Novo Bolão</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row clearfix" style="margin-top: 140px;">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            <strong>Cadastrar Bolão</strong>
+                        </h2>
+                    </div>
+                    <div class="body">
+                        <mat-vertical-stepper [linear]="isLinear" #stepper>
+                            <mat-step [stepControl]="form1">
+                                <form [formGroup]="form1" (ngSubmit)="cadastrar()">
+                                    <ng-template matStepLabel>Cadastre o Bolão</ng-template>
+                                    <mat-form-field *ngIf="bolaoEditId == undefined" [style.width.%]="100" appearance="outline">
+                                        <mat-label>Selecione um campeonato...</mat-label>
+                                        <mat-select formControlName="campeonato_id">
+                                            <mat-option *ngFor="let camp of campeonatos" value="{{camp.id}}"  > {{camp.nome}}</mat-option>
+                                            
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field *ngIf="bolaoEditId != undefined" [disabled]="true" [style.width.%]="100" appearance="outline">
+                                        <mat-label>Campeonato</mat-label>
+                                        <input matInput formControlName="nomeCampeonato" disabled="true" readonly>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>Nome</mat-label>
+                                        <input matInput formControlName="nome" required>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>Descrição</mat-label>
+                                        <input matInput formControlName="descricao" required>
+                                    </mat-form-field>
+
+                                    <div class="mb-5">
+                                        <mat-label class="mr-2">Tipo do bolão:</mat-label>
+                                        <mat-radio-group class="" formControlName="tipoBolao" aria-label="Selecione um filtro">
+                                            <mat-radio-button value="LIVRE" [checked]='true'>Livre</mat-radio-button>
+                                            <mat-radio-button value="PRIVADO">Privado</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+
+                                    <div>
+                                        <button *ngIf="bolaoEditId == undefined" type="submit" mat-raised-button
+                                            matStepperNext color="primary" [disabled]="!form1.valid">Salvar</button>
+                                        <button *ngIf="bolaoEditId" type="submit" mat-raised-button matStepperNext
+                                            color="primary" [disabled]="!form1.valid">Atualizar</button>
+                                    </div>
+                                </form>
+                            </mat-step>
+                            <mat-step [stepControl]="form2">
+                                <form [formGroup]="form2" (submit)="uploadCapa()" novalidate enctype="multipart/form-data">
+                                    <ng-template matStepLabel>Capa do Bolao</ng-template>
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <ngx-mat-file-input formControlName="imagem"
+                                            placeholder="Selecione uma imagem..."> </ngx-mat-file-input>
+                                        <mat-icon matSuffix>cloud_upload</mat-icon>
+                                        <!-- <input (chage)="onFileSelect($event)" type="file" accept="image/png, image/jpeg, image/gif" required> -->
+                                    </mat-form-field>
+                                    <div>
+                                        <button *ngIf="bolaoEditId == undefined" mat-raised-button matStepperPrevious (click)="reset()" color="warn" class="mr-2">Voltar</button>
+                                        <button mat-raised-button color="warn" class="mr-2" matStepperNext >Salvar sem imagem</button>
+                                        <button type="submit" mat-raised-button color="primary" matStepperNext [disabled]="!form2.valid">Salvar</button>
+                                    </div>
+                                </form>
+                            </mat-step>
+                            <mat-step >
+                                <ng-template matStepLabel>Definição dos critérios de pontuação</ng-template>                                                           
+
+                                <mat-card class="shadow mt-3">
+                                    <div class="d-flex flex-direction-sm-collum fill-sm align-items-center justify-content-center">
+                                        <div class="mr-3 mt-3 mb-2 w-title-criterio">
+                                           <span matTooltip="Placar exato" matBadge="i" matBadgeOverlap="false" matBadgeColor="accent"> PE </span>                                            
+                                        </div>
+                                        
+                                        <div class="" style="font-size: 10px">
+                                            <mat-form-field class="example-full-width" style="width: 40px; height: 25px;" appearance="outline">
+                                                <mat-label>PE</mat-label>
+                                                <input style="text-align: center !important" matInput [formControl]="formPE" (blur)="cadastrarCriterios(1,$event)" >
+                                            </mat-form-field>
+                                        </div>
+                                       
+                                        <div class="ml-sm-5 mt-4 d-flex flex-column align-items-center justify-content-center">
+                                            <div class="">
+                                                <span class="exemplo-title" style="text-align: center !important;"> Exemplo </span> 
+                                            </div>
+                                            <div>
+                                                <span style="font-size:12px">
+                                                    Jogo<b>: </b> <span class="exemplo-jogo">2</span> x <span class="exemplo-jogo">1</span> »  Palpite<b>: </b> <span class="exemplo-jogo">2</span> x <span class="exemplo-jogo">1</span> =  <span class="exemplo-title"> Pontua</span><br>
+                                                    Jogo<b>: </b> <span class="exemplo-jogo">1</span> x <span class="exemplo-jogo">1</span> »  Palpite<b>: </b> <span class="exemplo-jogo">1</span> x <span class="exemplo-jogo">1</span> = <span class="exemplo-title"> Pontua </span><br>
+                                                    Jogo<b>: </b>3 x 0 »  Palpite<b>: </b>2 x 0 = <span style="color: red;"> Não Pontua </span>
+                        
+                                              </span>
+                                            </div>                                            
+                                            
+                                        </div>
+                                        <div class="font-icon">
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: green;" *ngIf="formPE.value > 0"><i class="fas fa-check-circle"></i></div>
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: red;" *ngIf="formPE.value <= 0"><i class="fas fa-check-circle"></i></div>
+                                          </div>
+    
+                                    </div>
+
+                                </mat-card>
+                                <mat-card class="shadow mt-3">
+                                    <div class="d-flex flex-direction-sm-collum fill-sm align-items-center justify-content-center">
+                                        <div class="mr-3 mt-3 mb-2 w-title-criterio">
+                                            <span matTooltip="Placar Errado, Resultado Certo e Acertou Gol de um dos Times." matBadge="i" matBadgeOverlap="false" matBadgeColor="accent"> RCG </span>                                            
+                                        </div>
+                                        
+                                        <div class="" style="font-size: 10px">
+                                            <mat-form-field class="example-full-width" style="width: 40px; height: 25px;" appearance="outline">
+                                                <mat-label>RCG</mat-label>
+                                                <input style="text-align: center !important" matInput [formControl]="formRCG" (blur)="cadastrarCriterios(2,$event)" >
+                                            </mat-form-field>
+                                        </div>
+                                       
+                                        <div class="ml-sm-5 mt-4 d-flex flex-column align-items-center justify-content-center">
+                                            <div class="">
+                                                <span class="exemplo-title" style="text-align: center !important;"> Exemplo </span> 
+                                            </div>
+                                            <div>
+                                                <span style="font-size:12px">
+                                                    Jogo<b>: </b> <span class="">3</span> x <span class="exemplo-jogo">0</span> »  Palpite<b>: </b> <span class="">2</span> x <span class="exemplo-jogo">0</span> = <span class="exemplo-title"> Pontua </span><br>
+                                                    Jogo<b>: </b> <span class="">2</span> x <span class="exemplo-jogo">1</span> »  Palpite<b>: </b> <span class="">3</span> x <span class="exemplo-jogo">1</span> = <span class="exemplo-title"> Pontua </span><br>
+                                                    Jogo<b>: </b> <span class="">3</span> x <span class="">0</span> »  Palpite<b>: </b> <span class="">2</span> x <span class="">1</span> = <span style="color: red;"> Não Pontua </span>                                                    
+                        
+                                              </span>
+                                            </div>                                            
+                                            
+                                        </div>
+                                        <div class="font-icon">
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: green;" *ngIf="formRCG.value > 0"><i class="fas fa-check-circle"></i></div>
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: red;" *ngIf="formRCG.value <= 0"><i class="fas fa-check-circle"></i></div>
+                                          </div>
+    
+                                    </div>
+
+                                </mat-card>
+                                <mat-card class="shadow mt-3">
+                                    <div class="d-flex flex-direction-sm-collum fill-sm align-items-center justify-content-center">
+                                        <div class="mr-3 mt-3 mb-2 w-title-criterio">
+                                            <span matTooltip="Placar errado e resultado Certo" matBadge="i" matBadgeOverlap="false" matBadgeColor="accent"> RC </span>                                            
+                                        </div>
+                                        
+                                        <div class="" style="font-size: 10px">
+                                            <mat-form-field class="example-full-width" style="width: 40px; height: 25px;" appearance="outline">
+                                                <mat-label>RC</mat-label>
+                                                <input style="text-align: center !important" matInput [formControl]="formRC" (blur)="cadastrarCriterios(3,$event)" >
+                                            </mat-form-field>
+                                        </div>
+                                       
+                                        <div class="ml-sm-5 mt-4 d-flex flex-column align-items-center justify-content-center">
+                                            <div class="">
+                                                <span class="exemplo-title" style="text-align: center !important;"> Exemplo </span> 
+                                            </div>
+                                            <div>
+                                                <span style="font-size:12px">
+                                                    Jogo<b>: </b> <span class="">1</span> x <span class="">0</span> »  Palpite<b>: </b> <span class="">2</span> x <span class="">1</span> = <span class="exemplo-title"> Pontua </span><br>
+                                                    Jogo<b>: </b> <span class="">1</span> x <span class="">1</span> »  Palpite<b>: </b> <span class="">2</span> x <span class="">2</span> = <span class="exemplo-title"> Pontua </span><br>
+                                                    Jogo<b>: </b> <span class="">3</span> x <span class="">0</span> »  Palpite<b>: </b> <span class="">1</span> x <span class="">1</span> = <span style="color: red;"> Não Pontua </span>
+                                                    
+                                              </span>
+                                            </div>                                            
+                                            
+                                        </div>
+                                        <div class="font-icon">
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: green;" *ngIf="formRC.value > 0"><i class="fas fa-check-circle"></i></div>
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: red;" *ngIf="formRC.value <= 0"><i class="fas fa-check-circle"></i></div>
+                                          </div>
+    
+                                    </div>
+
+                                </mat-card>
+                                <mat-card class="shadow mt-3">
+                                    <div class="d-flex flex-direction-sm-collum fill-sm align-items-center justify-content-center">
+                                        <div class="mr-3 mt-3 mb-2 w-title-criterio">
+                                            <span matTooltip="Acertou o Gol com o Placar Errado" matBadge="i" matBadgeOverlap="false" matBadgeColor="accent"> GE </span>                                            
+                                        </div>
+                                        
+                                        <div class="" style="font-size: 10px">
+                                            <mat-form-field class="example-full-width" style="width: 40px; height: 25px;" appearance="outline">
+                                                <mat-label>GE</mat-label>
+                                                <input style="text-align: center !important" matInput [formControl]="formGE" (blur)="cadastrarCriterios(4,$event)" >
+                                            </mat-form-field>
+                                        </div>
+                                       
+                                        <div class="ml-sm-5 mt-4 d-flex flex-column align-items-center justify-content-center">
+                                            <div class="">
+                                                <span class="exemplo-title" style="text-align: center !important;"> Exemplo </span> 
+                                            </div>
+                                            <div class="">
+                                                <span style="font-size:12px">
+                                                    Jogo<b>: </b> <span class="exemplo-jogo">1</span> x <span class="">0</span> »  Palpite<b>: </b> <span class="exemplo-jogo">1</span> x <span class="">2</span> = <span class="exemplo-title"> Pontua </span><br>
+                                                    Jogo<b>: </b> <span class="">2</span> x <span class="exemplo-jogo">2</span> »  Palpite<b>: </b> <span class="">1</span> x <span class="exemplo-jogo">2</span> = <span class="exemplo-title"> Pontua </span><br>
+                                                    Jogo<b>: </b> <span class="">2</span> x <span class="">1</span> »  Palpite<b>: </b> <span class="">1</span> x <span class="">0</span> = <span style="color: red;"> Não Pontua </span>
+                                                    
+                                              </span>
+                                            </div>                                           
+                                            
+                                        </div>
+
+                                        <div class="font-icon">
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: green;" *ngIf="formGE.value > 0"><i class="fas fa-check-circle"></i></div>
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: red;" *ngIf="formGE.value <= 0"><i class="fas fa-check-circle"></i></div>
+                                          </div>
+    
+                                    </div>
+                                    
+
+                                </mat-card>
+                            </mat-step>
+                        </mat-vertical-stepper>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

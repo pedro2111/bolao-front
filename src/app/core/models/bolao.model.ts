@@ -1,4 +1,7 @@
 export class Bolao{
+    id:number;
+    idCriador:number;
+    idCampeonato:number;
     nomeCriador:string;
     nomeCampeonato:string;
     urlCampeonato:string;
@@ -7,4 +10,5 @@ export class Bolao{
     dtLimitePalpiteExtra:string;
     dtCriacao:Date;
     tipoBolao:string
+    url:string
 }

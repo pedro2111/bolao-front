@@ -10,6 +10,15 @@ export const ROUTES: RouteInfo[] = [
     groupTitle: false,
     submenu: [
       {
+        path: 'administracao/bolao',
+        title: 'Bolão',
+        moduleName: 'administracao',
+        icon: '',
+        class: 'ml-menu',
+        groupTitle: false,
+        submenu: []
+      },
+      {
         path: 'administracao/campeonato',
         title: 'Campeonato',
         moduleName: 'administracao',
@@ -19,14 +28,15 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
       },
       {
-        path: 'administracao/bolao',
-        title: 'Bolão',
+        path: 'administracao/jogo',
+        title: 'Jogo',
         moduleName: 'administracao',
         icon: '',
         class: 'ml-menu',
         groupTitle: false,
         submenu: []
       },
+      
       {
         path: 'administracao/time',
         title: 'Time',

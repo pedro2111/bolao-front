@@ -15,6 +15,10 @@ export class CampeonatoService {
 
     return this.http.get<Campeonato[]>(`${environment.apiUrl}/campeonatos/listar-todos-campeonatos`);
   }
+  public listarTodosCampeonatosAtivos(){
+
+    return this.http.get<Campeonato>(`${environment.apiUrl}/campeonatos/listar-todos-campeonatos-ativos`);
+  }
   public listarCampeonatoById(id){
 
     return this.http.get<Campeonato>(`${environment.apiUrl}/campeonatos/${id}`);

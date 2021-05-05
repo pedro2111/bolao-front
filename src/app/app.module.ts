@@ -31,6 +31,7 @@ import { WINDOW_PROVIDERS } from './core/service/window.service';
 import { TokenInterceptorService } from './core/interceptor/token-interceptor.service';
 import { HomeCampeonatoComponent } from './campeonato/home-campeonato/home-campeonato.component';
 
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
   wheelPropagation: false

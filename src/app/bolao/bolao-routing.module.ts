@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DetalheBolaoComponent } from './detalhe-bolao/detalhe-bolao.component';
 import { HomeBolaoComponent } from './home-bolao/home-bolao.component';
 
 
 const routes: Routes = [
-  { path: '', component: HomeBolaoComponent }
+  { path: '', component: HomeBolaoComponent },
+  { path: 'espiar', component: DetalheBolaoComponent }
 ];
 
 @NgModule({

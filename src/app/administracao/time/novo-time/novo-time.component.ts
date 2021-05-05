@@ -4,14 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { NotificationService } from 'src/app/core/service/notification.service';
 
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
 import { FileInput } from 'ngx-material-file-input';
-import { MatChipInputEvent } from '@angular/material/chips';
 import { Time } from 'src/app/core/models/time.model';
-import { startWith, switchMap, tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { TimeService } from 'src/app/core/service/time.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-novo-time',
@@ -41,15 +36,20 @@ export class NovoTimeComponent implements OnInit {
 
     this.route.paramMap.subscribe((param) => {
       this.timeEditId = param.get('id');
+
+      if (param.get('id') != undefined) {
+        this.timeSevice.listarTimeById(this.timeEditId).subscribe(
+          (res: Time) => {
+            this.carregaForm(res)
+
+          }, (err) => {
+            console.log(err)
+          }
+        )
+      }
     });
 
-    this.form1 = this.formBuilder.group({
-      usuario_id: [this.criador],
-      nome: ['', Validators.required]
-    });
-    this.form2 = this.formBuilder.group({
-      imagem: ['', Validators.required]
-    });
+    this.initForms();
   }
 
   onFileSelect(event) {
@@ -62,14 +62,82 @@ export class NovoTimeComponent implements OnInit {
 
   cadastrar() {
 
+    let time: Time = this.form1.getRawValue();
+
+
+    if (this.timeEditId == undefined) {
+      this.timeSevice.cadastrar(time).subscribe(
+        (res: Time) => {
+          this.time_id = res.id,
+          this.notificationService.showNotification('snackbar-success', 'Time cadastrado com sucesso!', 'top', 'right');
+
+        }, (err) => {
+          console.log(err)
+        });
+    
+      } else {
+      this.timeSevice.atualizar(this.timeEditId, time).subscribe(
+        (res) => {
+          this.time_id = this.timeEditId,
+          this.notificationService.showNotification('snackbar-success', 'Time atualizado com sucesso!', 'top', 'right')
+        
+        }, (err) => {
+          console.log(err)
+        });
+    }
+
   }
   uploadCapa() {
+    if (this.form2.get('imagem').value != '') {
+
+      const file_form: FileInput = this.form2.get('imagem').value;
+
+      const file = file_form.files[0];
+
+      this.formData.append('time_id', this.time_id)
+      this.formData.append('imagem', file)
+      if (this.timeEditId == undefined) {
+        this.formData.append('acao', 'cadastrar');
+      } else {
+        this.formData.append('acao', 'editar');
+      }
+
+      this.timeSevice.uploadCapaTime(this.formData).subscribe(
+        (res) => {
+          this.notificationService.showNotification('snackbar-success', 'Imagem adicionada com sucesso!', 'top', 'right')
+          setTimeout(()=>{
+            this.router.navigate(['/administracao/time']);
+          },2000)
+        }, (err) => {
+          console.log(err)
+        })
+    }
+
+  }
+
+  carregaForm(time: Time) {
+    this.form1.patchValue({
+      nome: time.nome,
+      url: time.url
+    });
 
   }
   
-  carregaForm(time: Time) {
-    this.form1.patchValue({
-      nome: time.nome
+  reset(){
+    this.form1.reset();
+    this.form2.reset();
+    this.initForms();
+
+  }
+  initForms(){
+    this.form1 = this.formBuilder.group({
+      usuario_id: [this.criador],
+      nome: ['', Validators.required],
+      url: [''],
+      public_id: ['']
+    });
+    this.form2 = this.formBuilder.group({
+      imagem: ['', Validators.required]
     });
 
   }

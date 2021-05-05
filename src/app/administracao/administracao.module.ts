@@ -15,6 +15,12 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { MatSelectModule} from '@angular/material/select';
 import { MatChipsModule} from '@angular/material/chips';
 import { MatAutocompleteModule} from '@angular/material/autocomplete';
+import { NgxMaskModule } from 'ngx-mask';
+import { MatRadioModule} from '@angular/material/radio';
+import { MatCardModule} from '@angular/material/card';
+import { MatTooltipModule} from '@angular/material/tooltip';
+import { MatBadgeModule } from '@angular/material/badge';
+
 
 
 import { NovoCampeonatoComponent } from './campeonato/novo-campeonato/novo-campeonato.component';
@@ -22,11 +28,15 @@ import { HomeCampeonatoComponent } from './campeonato/home-campeonato/home-campe
 import { FinalizarCampeonatoComponent } from './campeonato/finalizar-campeonato/finalizar-campeonato.component';
 import { HomeTimeComponent } from './time/home-time/home-time.component';
 import { NovoTimeComponent } from './time/novo-time/novo-time.component';
+import { HomeJogoComponent } from './jogo/home-jogo/home-jogo.component';
+import { NovoJogoComponent } from './jogo/novo-jogo/novo-jogo.component';
+import { HomeBolaoComponent } from './bolao/home-bolao/home-bolao.component';
+import { NovoBolaoComponent } from './bolao/novo-bolao/novo-bolao.component';
 
 
 
 @NgModule({
-  declarations: [HomeCampeonatoComponent, NovoCampeonatoComponent, FinalizarCampeonatoComponent, HomeTimeComponent, NovoTimeComponent],
+  declarations: [HomeCampeonatoComponent, NovoCampeonatoComponent, FinalizarCampeonatoComponent, HomeTimeComponent, NovoTimeComponent, HomeJogoComponent, NovoJogoComponent, HomeBolaoComponent, NovoBolaoComponent],
   imports: [
     CommonModule,
     AdministracaoRoutingModule,
@@ -41,7 +51,12 @@ import { NovoTimeComponent } from './time/novo-time/novo-time.component';
     MaterialFileInputModule,
     MatSelectModule,
     MatChipsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    NgxMaskModule,
+    MatRadioModule,
+    MatCardModule,
+    MatTooltipModule,
+    MatBadgeModule
   ]
 })
 export class AdministracaoModule { }
