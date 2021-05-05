@@ -11,6 +11,8 @@ import { CampeonatoService } from 'src/app/core/service/campeonato.service';
 import { BolaoCriterio } from 'src/app/core/models/bolaoCriterio.model';
 import { BolaoCriterioService } from 'src/app/core/service/bolao-criterio.service';
 
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-novo-bolao',
@@ -30,6 +32,7 @@ export class NovoBolaoComponent implements OnInit {
   formVice = new FormControl();
   formTerceiro = new FormControl();
   formQuarto = new FormControl();
+  formDtPalpiteExtra = new FormControl('', [Validators.minLength(9)]);
 
   criador = localStorage.getItem('usuarioId');
   formData = new FormData();
@@ -158,7 +161,6 @@ export class NovoBolaoComponent implements OnInit {
 
     if (pontuacao) {
 
-      console.log(pontuacao)
       bc.bolao_id = this.bolao_id;
       bc.criterio_id = criterioId;
       bc.pontuacao = pontuacao;
@@ -173,6 +175,29 @@ export class NovoBolaoComponent implements OnInit {
     }
 
   }
+  cadastrarDtPalpiteExtra(event) {
+
+    let dtPalpiteExtra:string = event.target.value;
+
+    if (dtPalpiteExtra.length == 16) {
+      
+      let dtFormat = moment(dtPalpiteExtra, 'DD-MM-YYYY hh:mm');
+      let bolao = new Bolao();
+
+      bolao.dtLimitePalpiteExtra = dtFormat.format('YYYY-MM-DD HH:mm');
+
+      this.bolaoService.atualizarDtPalpiteExtra(this.bolao_id, bolao).subscribe(
+        (res) => {
+
+        }, (err) => {
+          console.log(err)
+        });
+
+    }
+
+
+
+  }
 
   carregaForm(bolao: Bolao) {
     this.form1.patchValue({
@@ -182,6 +207,8 @@ export class NovoBolaoComponent implements OnInit {
       nomeCampeonato: bolao.nomeCampeonato,
       tipoBolao: bolao.tipoBolao
     });
+    let dtPalpiteExtra = moment(bolao.dtLimitePalpiteExtra, "YYYY-MM-DD HH:mm").format("DD-MM-YYYY HH:mm")
+    this.formDtPalpiteExtra.setValue(dtPalpiteExtra);
 
   }
   listarCriterios(bolaoId) {

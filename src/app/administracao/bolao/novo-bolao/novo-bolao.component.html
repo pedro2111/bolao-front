@@ -89,7 +89,7 @@
                                 </form>
                             </mat-step>
                             <mat-step >
-                                <ng-template matStepLabel>Definição dos critérios de pontuação</ng-template>                                                           
+                                <ng-template matStepLabel>Critérios de pontuação</ng-template>                                                           
 
                                 <mat-card class="shadow mt-3">
                                     <div class="d-flex flex-direction-sm-collum fill-sm align-items-center justify-content-center">
@@ -231,6 +231,118 @@
     
                                     </div>
                                     
+
+                                </mat-card>
+                            </mat-step>
+                            <mat-step >
+                                <ng-template matStepLabel>Critérios de pontuação Extra</ng-template>                                                           
+
+                                <mat-card class="shadow mt-3">
+                                    <div class="d-flex flex-direction-sm-collum fill-sm align-items-center justify-content-center">
+                                            
+                                        <div class="mr-3 mt-3 mb-2 ">
+                                            <span> Data e hora limite p/ o palpite </span>                                            
+                                         </div>
+                                        <div class="" >
+                                            <mat-form-field class="example-full-width">
+                                               
+                                                <span matPrefix>
+                                                    <mat-icon class="mr-2">date_range</mat-icon>
+                                                </span>
+                                                <input matInput appearance="outline" [formControl]="formDtPalpiteExtra" (blur)="cadastrarDtPalpiteExtra($event)" placeholder="EX: 10-07-2021 11:05" [dropSpecialCharacters]="false" mask="00-00-0000 00:00" />
+                                            </mat-form-field>
+                                        </div>
+                                       
+                                        <div class="font-icon">
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: green;" *ngIf="!formDtPalpiteExtra.invalid && formDtPalpiteExtra.value"><i class="fas fa-check-circle"></i></div>
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: red;" *ngIf="formDtPalpiteExtra.invalid || !formDtPalpiteExtra.value"><i class="fas fa-check-circle"></i></div>
+                                          </div>
+    
+                                    </div>
+
+                                </mat-card>
+                                <mat-card class="shadow mt-3">
+                                    <div class="d-flex flex-direction-sm-collum fill-sm align-items-center justify-content-center">
+                                        <div class="mr-3 mt-3 mb-2 w-title-criterio">
+                                           <span> Campeão </span>                                            
+                                        </div>
+                                        
+                                        <div class="" style="font-size: 10px">
+                                            <mat-form-field class="example-full-width" style="width: 40px; height: 25px;" appearance="outline">
+                                                <mat-label>Campeão</mat-label>
+                                                <input style="text-align: center !important" matInput [formControl]="formCampeao" (blur)="cadastrarCriterios(5,$event)" >
+                                            </mat-form-field>
+                                        </div>
+                                       
+                                        <div class="font-icon mr-2 mt-3">
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: green;" *ngIf="formCampeao.value > 0"><i class="fas fa-check-circle"></i></div>
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: red;" *ngIf="formCampeao.value <= 0"><i class="fas fa-check-circle"></i></div>
+                                          </div>
+    
+                                    </div>
+
+                                </mat-card>
+                                <mat-card class="shadow mt-3">
+                                    <div class="d-flex flex-direction-sm-collum fill-sm align-items-center justify-content-center">
+                                        <div class="mr-3 mt-3 mb-2 w-title-criterio">
+                                            <span> Vice </span>                                            
+                                        </div>
+                                        
+                                        <div class="" style="font-size: 10px">
+                                            <mat-form-field class="example-full-width" style="width: 40px; height: 25px;" appearance="outline">
+                                                <mat-label>Vice</mat-label>
+                                                <input style="text-align: center !important" matInput [formControl]="formVice" (blur)="cadastrarCriterios(6,$event)" >
+                                            </mat-form-field>
+                                        </div>
+                                       
+                                        <div class="font-icon mr-2 mt-3">
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: green;" *ngIf="formVice.value > 0"><i class="fas fa-check-circle"></i></div>
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: red;" *ngIf="formVice.value <= 0"><i class="fas fa-check-circle"></i></div>
+                                          </div>
+    
+                                    </div>
+
+                                </mat-card>
+                                <mat-card class="shadow mt-3">
+                                    <div class="d-flex flex-direction-sm-collum fill-sm align-items-center justify-content-center">
+                                        <div class="mr-3 mt-3 mb-2 w-title-criterio">
+                                            <span> Terceiro </span>                                            
+                                        </div>
+                                        
+                                        <div class="" style="font-size: 10px">
+                                            <mat-form-field class="example-full-width" style="width: 40px; height: 25px;" appearance="outline">
+                                                <mat-label>Terceiro</mat-label>
+                                                <input style="text-align: center !important" matInput [formControl]="formTerceiro" (blur)="cadastrarCriterios(7,$event)" >
+                                            </mat-form-field>
+                                        </div>
+                                       
+                                        <div class="font-icon mr-2 mt-3">
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: green;" *ngIf="formTerceiro.value > 0"><i class="fas fa-check-circle"></i></div>
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: red;" *ngIf="formTerceiro.value <= 0"><i class="fas fa-check-circle"></i></div>
+                                          </div>
+    
+                                    </div>
+
+                                </mat-card>
+                                <mat-card class="shadow mt-3">
+                                    <div class="d-flex flex-direction-sm-collum fill-sm align-items-center justify-content-center">
+                                        <div class="mr-3 mt-3 mb-2 w-title-criterio">
+                                            <span> Quarto </span>                                            
+                                        </div>
+                                        
+                                        <div class="" style="font-size: 10px">
+                                            <mat-form-field class="example-full-width" style="width: 40px; height: 25px;" appearance="outline">
+                                                <mat-label>Quarto</mat-label>
+                                                <input style="text-align: center !important" matInput [formControl]="formQuarto" (blur)="cadastrarCriterios(8,$event)" >
+                                            </mat-form-field>
+                                        </div>                                       
+
+                                        <div class="font-icon mr-2 mt-3">
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: green;" *ngIf="formQuarto.value > 0"><i class="fas fa-check-circle"></i></div>
+                                            <div class="icon-preview animate__animated animate__bounce" style="color: red;" *ngIf="formQuarto.value <= 0"><i class="fas fa-check-circle"></i></div>
+                                          </div>
+    
+                                    </div>                                    
 
                                 </mat-card>
                             </mat-step>

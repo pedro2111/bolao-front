@@ -64,5 +64,18 @@ export class BolaoService {
 
   }
 
+  public atualizarDtPalpiteExtra (id, bolao:Bolao){
+
+    let headers: HttpHeaders = new HttpHeaders()
+    headers.append('Content-type', 'application/json');
+
+    const httpOptions = {
+      headers: headers
+    }
+
+    return this.http.put(`${environment.apiUrl}/boloes/dtpalpiteextra/${id}`, bolao, httpOptions);
+
+  }
+
 
 }

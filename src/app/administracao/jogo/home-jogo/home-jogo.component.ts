@@ -136,8 +136,6 @@ export class HomeJogoComponent implements OnInit {
         });
 
     }
-    //console.log(this.jogosF.getRawValue()[index])
-    
 
   }
   cadastrar(){
