@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { NotificationService } from 'src/app/core/service/notification.service';
-
-import { FileInput } from 'ngx-material-file-input';
 import { BolaoService } from 'src/app/core/service/bolao.service';
 import { Bolao } from 'src/app/core/models/bolao.model';
 import { CampeonatoService } from 'src/app/core/service/campeonato.service';
@@ -12,7 +10,11 @@ import { BolaoCriterio } from 'src/app/core/models/bolaoCriterio.model';
 import { BolaoCriterioService } from 'src/app/core/service/bolao-criterio.service';
 
 import * as moment from 'moment';
-
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { FileInput } from 'ngx-material-file-input';
+import { BolaoParticipante } from 'src/app/core/models/bolaoParticipante.model';
+import { BolaoParticipanteService } from 'src/app/core/service/bolao-participante.service';
 
 @Component({
   selector: 'app-novo-bolao',
@@ -41,11 +43,15 @@ export class NovoBolaoComponent implements OnInit {
   bolaoEditId;
   campeonatos;
   bolao: Bolao;
+  bolaoParticipantes;
+
+ 
   constructor(
     private formBuilder: FormBuilder,
     private bolaoService: BolaoService,
     private campeonatoService: CampeonatoService,
     private bcService: BolaoCriterioService,
+    private bpService:BolaoParticipanteService,
     private notificationService: NotificationService,
     private router: Router,
     private route: ActivatedRoute
@@ -53,14 +59,17 @@ export class NovoBolaoComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.route.paramMap.subscribe((param) => {
+      this.route.paramMap.subscribe((param) => {
 
       this.bolaoEditId = param.get('id');
-      this.listarCriterios(this.bolaoEditId);
+      
 
       if (param.get('id') != undefined) {
         this.isLinear = false;
         this.bolao_id = this.bolaoEditId;
+        this.listarCriterios(this.bolaoEditId);      
+        this.listarBolaoParticipantes(this.bolaoEditId);
+
         this.bolaoService.listarBolaoById(this.bolaoEditId).subscribe(
           (res: Bolao) => {
             this.carregaForm(res),
@@ -83,6 +92,23 @@ export class NovoBolaoComponent implements OnInit {
     this.initForms();
   }
 
+  listarBolaoParticipantes(bolaoId) {
+    this.bpService.listarBolaoParticipantes(bolaoId).subscribe(
+      (res) => {
+        this.bolaoParticipantes = res;
+      },(err) => {
+        console.log(err)
+      });  
+  }
+  ativarParticipante(idParticipante){
+    this.bpService.ativarToggle(idParticipante).subscribe(
+      () => {},
+      (err) => {
+        console.log(err)
+      })
+
+  }
+
   onFileSelect(event) {
     //console.log('event imagem' + event)
     if (event.target.files.length > 0) {
@@ -102,6 +128,7 @@ export class NovoBolaoComponent implements OnInit {
         (res: Bolao) => {
           this.bolao_id = res.id,
             this.listarCriterios(res.id),
+            this.listarBolaoParticipantes(res.id);
             this.notificationService.showNotification('snackbar-success', 'Bolão cadastrado com sucesso!', 'top', 'right');
 
         }, (err) => {
@@ -278,7 +305,7 @@ export class NovoBolaoComponent implements OnInit {
     });
 
     this.form2 = this.formBuilder.group({
-      imagem: ['', Validators.required]
+      imagem: ['']
     });
 
   }

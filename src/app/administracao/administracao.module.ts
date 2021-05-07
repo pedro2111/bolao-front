@@ -20,6 +20,8 @@ import { MatRadioModule} from '@angular/material/radio';
 import { MatCardModule} from '@angular/material/card';
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCheckboxModule} from '@angular/material/checkbox';
 
 
 
@@ -56,7 +58,9 @@ import { NovoBolaoComponent } from './bolao/novo-bolao/novo-bolao.component';
     MatRadioModule,
     MatCardModule,
     MatTooltipModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatPaginatorModule,
+    MatCheckboxModule
   ]
 })
 export class AdministracaoModule { }
