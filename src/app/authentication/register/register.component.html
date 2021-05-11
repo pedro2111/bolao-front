@@ -58,7 +58,7 @@
                       </mat-form-field>
 
                       <div class="container-login100-form-btn">
-                        <button mat-flat-button color="primary" class="login100-form-btn" type="submit" [class.spinner]="loading" [disabled]="loading">
+                        <button mat-flat-button color="primary" class="login100-form-btn" type="submit" [class.spinner]="loading" [disabled]="loading || !form2.valid">
                           Salvar Foto
                         </button>
                         <button mat-flat-button color="warn" class="login100-form-btn mt-2 " [routerLink]="['/authentication/login']">

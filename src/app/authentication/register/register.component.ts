@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.form2 = this.fb.group({
-      imagem: ['']
+      imagem: [null, Validators.required]
     });
 
   }
