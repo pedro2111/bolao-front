@@ -32,7 +32,14 @@ export class LoginService {
       headers:headers
     }
 
-    return this.http.post(`${environment.apiUrl}/usuarios`, usuario, httpOptions);
+    return this.http.post<Usuario>(`${environment.apiUrl}/usuarios`, usuario, httpOptions);
 
   }
+
+  uploadFoto(formData:FormData){
+
+    return this.http.put(`${environment.apiUrl}/usuarios/upload-imagem`,formData)
+  } 
+  
+
 }

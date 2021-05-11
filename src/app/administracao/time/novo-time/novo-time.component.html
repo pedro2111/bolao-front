@@ -51,6 +51,7 @@
                   <form [formGroup]="form2" (submit)="uploadCapa()" novalidate enctype="multipart/form-data">
                     <ng-template matStepLabel>Capa do Time</ng-template>
                     <mat-form-field class="example-full-width" appearance="outline">
+                       
                         <ngx-mat-file-input formControlName="imagem" placeholder="Selecione uma imagem..."> </ngx-mat-file-input>
                         <mat-icon matSuffix>cloud_upload</mat-icon>
                       <!-- <input (chage)="onFileSelect($event)" type="file" accept="image/png, image/jpeg, image/gif" required> -->

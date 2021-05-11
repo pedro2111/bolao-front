@@ -53,7 +53,7 @@ export class NovoTimeComponent implements OnInit {
   }
 
   onFileSelect(event) {
-    console.log('event imagem' + event)
+    //console.log('event imagem' + event)
     if (event.target.files.length > 0) {
       this.imagem = event.target.files[0],
         this.form2.get('imagem').setValue(event.target.files[0])

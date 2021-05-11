@@ -8,12 +8,12 @@
                 <div>
                   <div class="text-center">
                     <div>
-                      <a routerLink="" class="logo-full"><img src="assets/images/logo-full.png" alt="logo-full"></a>
+                      <a routerLink="" class="logo-full"><img src="assets/images/logo-bolao.png" alt="logo-full"></a>
                     </div>
                     <h4 class="font-20 mt-4">Cadastro Novo usuário</h4>
                   </div>
                   <div class="p-2 mt-5 ">
-                    <form [formGroup]="formulario" (ngSubmit)="cadastrar()">
+                    <form [formGroup]="formulario" (ngSubmit)="cadastrar()" *ngIf="!showFormFoto">
                       <div class="form-group auth-form-group mb-4">
                         <mat-icon matSuffix class="auth-page-icon">face</mat-icon>
                         <input type="text" formControlName="nome" class="form-control auth-control" id="nome"
@@ -40,19 +40,38 @@
                           <div *ngIf="f.senha.errors.required">senha é obrigatório!</div>
                         </div>
                       </div>
-
-                      <div class="flex-sb-m w-full p-t-15 p-b-20">
-                        <div>
-                          <span>Já tem cadastro? <a routerLink="/authentication/login">Login</a></span>
-                        </div>
-                      </div>
-
+                      
                       <div class="container-login100-form-btn">
-                        <button mat-flat-button color="primary" class="login100-form-btn" type="submit">
+                        <button mat-flat-button color="primary" class="login100-form-btn" [class.spinner]="loading" [disabled]="loading" type="submit">
                           Salvar
                         </button>
                       </div>
                     </form>
+                    <form [formGroup]="form2" (submit)="uploadFoto()" *ngIf="showFormFoto" class="animate__animated animate__bounceInRight" novalidate enctype="multipart/form-data">
+                      
+                      <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Selecione uma foto...</mat-label>
+                        <ngx-mat-file-input formControlName="imagem" placeholder="Selecione uma imagem..."> </ngx-mat-file-input>
+                        <mat-icon matSuffix>cloud_upload</mat-icon>
+                      <!-- <input (chage)="onFileSelect($event)" type="file" accept="image/png, image/jpeg, image/gif" required> -->
+                    
+                      </mat-form-field>
+
+                      <div class="container-login100-form-btn">
+                        <button mat-flat-button color="primary" class="login100-form-btn" type="submit" [class.spinner]="loading" [disabled]="loading">
+                          Salvar Foto
+                        </button>
+                        <button mat-flat-button color="warn" class="login100-form-btn mt-2 " [routerLink]="['/authentication/login']">
+                          Salvar sem foto
+                        </button>
+                      </div>
+                        
+                    </form>
+                    <div class="flex-sb-m w-full p-t-15 p-b-20">
+                      <div>
+                        <span>Já tem cadastro? <a routerLink="/authentication/login">Login</a></span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

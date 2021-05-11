@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
 
   error: boolean;
   submit = false;
+  loading = false;
 
   constructor(private loginService: LoginService, private router: Router) { }
 
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit {
       return;
       
     } else {
+      this.loading = true;
       let usuario: Usuario;
       usuario = this.formulario.getRawValue();
       this.loginService.login(usuario).subscribe((res) => {
@@ -50,6 +52,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/bolao']);
 
       }, (err) => {
+        this.loading = false;
         console.log(err);
         //console.log('validacao' + this.formulario.get('email').valid)
         this.error = true;

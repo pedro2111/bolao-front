@@ -9,7 +9,8 @@
         <li class="sidebar-user-panel">
           <div class="user-panel">
             <div class=" image">
-              <img *ngIf="usuario" src="{{usuario.url}}" class="img-circle user-img-circle" alt="User Image" />
+              <img *ngIf="usuario?.url != null" src="{{usuario?.url}}" class="img-circle user-img-circle" alt="User Image" />
+              <img *ngIf="usuario?.url == null" src="assets/images/logo-bolao.png" class="img-circle user-img-circle" alt="User Image" />
             </div>
           </div>
           <div class="profile-usertitle">

@@ -14,7 +14,7 @@
       <ul class="pull-left collapse-menu-icon">
         <li>
           <button mat-icon-button (click)="callSidemenuCollapse()" class="sidemenu-collapse">
-            <mat-icon style="color: white;">menu</mat-icon>
+            <mat-icon style="color: white !important;">menu</mat-icon>
           </button>
         </li>
       </ul>
@@ -22,9 +22,15 @@
         <!-- #START# Notifications-->
         <li class="nav-item" ngbDropdown>
           <button mat-icon-button ngbDropdownToggle class="nav-notification-icons">
-            <mat-icon>notifications_none</mat-icon>
+            <mat-icon  style="color: white !important;">notifications_none</mat-icon>
             <span class="label-count bg-orange"></span>
           </button>
+          <button mat-icon-button class="nav-notification-icons" [routerLink]="['/authentication/login']" >
+            <i class="fas fa-sign-out-alt" style="color: white !important;"></i>
+            
+          </button>
+          
+
           <div ngbDropdownMenu class="notification-dropdown pullDown">
             <div class="noti-list" style="position: relative; max-width: 600px; max-height: 250px;" [perfectScrollbar]>
               <ul class="menu">
