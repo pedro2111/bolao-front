@@ -10,6 +10,25 @@ export class BolaoParticipanteService {
 
   constructor(private http:HttpClient) { }
 
+  public cadastrar(bolaoId, participanteId){
+    let headers: HttpHeaders = new HttpHeaders()
+    headers.append('Content-type', 'application/json');
+
+    const httpOptions = {
+      headers: headers
+    }    
+    let arrParticipante:number[] = [participanteId];
+    
+    let payload = {
+      bolao_id: bolaoId,
+      participante_ids:  arrParticipante
+    }
+    //console.log(payload)
+    
+    return this.http.post(`${environment.apiUrl}/bolaoparticipantes`, payload,httpOptions)
+    
+  }
+  
   public listarBolaoParticipantes(idBolao){
 
     return this.http.get<BolaoParticipante[]>(`${environment.apiUrl}/bolaoparticipantes/${idBolao}`)
@@ -25,5 +44,10 @@ export class BolaoParticipanteService {
     }
 
     return this.http.put(`${environment.apiUrl}/bolaoparticipantes/ativar-toggle/participante/${idParticipante}`, httpOptions)
+  }
+
+  public listarBoloesIncritos(idUsuarioLogado){
+
+    return this.http.get<BolaoParticipante[]>(`${environment.apiUrl}/bolaoparticipantes/participante/${idUsuarioLogado}`)
   }
 }

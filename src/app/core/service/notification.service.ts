@@ -16,6 +16,14 @@ export class NotificationService {
       panelClass: colorName
     });
   }
+  showNotificationDuration(colorName, text, placementFrom, placementAlign,duration) {
+    this.snackBar.open(text, '', {
+      duration: duration,
+      verticalPosition: placementFrom,
+      horizontalPosition: placementAlign,
+      panelClass: colorName
+    });
+  }
 
   
 }

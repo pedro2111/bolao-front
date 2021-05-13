@@ -13,6 +13,11 @@ import {
 } from "rxjs/operators";
 import * as moment from 'moment';
 import { Jogo } from 'src/app/core/models/jogo.model';
+import { ActivatedRoute } from '@angular/router';
+import { Bolao } from 'src/app/core/models/bolao.model';
+import { BolaoService } from 'src/app/core/service/bolao.service';
+import { Palpite } from 'src/app/core/models/palpite.model';
+import { PalpiteService } from 'src/app/core/service/palpite.service';
 
 @Component({
   selector: 'app-detalhe-bolao',
@@ -22,36 +27,41 @@ import { Jogo } from 'src/app/core/models/jogo.model';
 export class DetalheBolaoComponent implements OnInit {
 
   form: FormGroup;
-  filterRadio? = 2;
+  filterRadio?;
   campeonatoId?;
   filtro = new FormControl();
   filtroRodada = new FormControl();
   filtroData = new FormControl();
-  filtroCampeonato = new FormControl('nulo');
-  criador_id = localStorage.getItem('usuarioId');
-  campeonatos;
+  usuarioId = localStorage.getItem('usuarioId');
   jogos;
   rodadas;
   loadingJogos = false;
+
+  bolaoId;
+  bolao:Bolao;
+  palpites:Palpite[];
 
   constructor(
     private fb:FormBuilder,
     private jogoService:JogoService,
     private campeonatoService:CampeonatoService,
-    private notificationService:NotificationService
+    private bolaoService:BolaoService,
+    private notificationService:NotificationService,
+    private palpiteService:PalpiteService,
+    private route:ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.listarCampeonatos();   
+
+    this.route.paramMap.subscribe((param) => {
+      this.bolaoId = param.get('id');
+      this.listarBolao(this.bolaoId);
+      this.listarPalpitesUsuario(this.bolaoId,this.usuarioId);
+    });
+  
     this.initForm();
       
-    this.filtroCampeonato.valueChanges.subscribe(
-      (res)=>{
-        this.listarRodadas(res);
-        
-      },(err) => {
-      })
-
+    
     this.filtroRodada.valueChanges.subscribe(
       (res)=>{
         this.listarJogosRodada(res);
@@ -68,6 +78,23 @@ export class DetalheBolaoComponent implements OnInit {
 
   }
 
+  listarBolao(bolaoId){
+    this.bolaoService.listarBolaoById(bolaoId).subscribe(
+      (res) => {
+        this.bolao = res,
+        this.listarRodadas(res.idCampeonato),
+        this.campeonatoId = res.idCampeonato
+      });
+
+  }
+  listarPalpitesUsuario(bolaoId,usuarioId){
+
+    this.palpiteService.listarPalpitesUsuarioBolao(bolaoId,usuarioId).subscribe(
+      (res) => {
+        this.palpites = res
+      }
+    );
+  }
   listarRodadas(campeonatoId){
 
     if(campeonatoId != undefined){
@@ -81,18 +108,13 @@ export class DetalheBolaoComponent implements OnInit {
     }
     
   }
-  listarCampeonatos(){
-    this.campeonatoService.listarTodosCampeonatosAtivos().subscribe(
-      (res)=>{
-        this.campeonatos = res;
-      });
-  }
+  
 
   listarJogosData(data:string){
     let dt = moment(data, 'DD-MM-YYYY');
     let dataFormatada = dt.format('YYYY-MM-DD');
 
-    this.jogoService.listarPorData(this.filtroCampeonato.value, dataFormatada).subscribe(
+    this.jogoService.listarPorData(this.campeonatoId, dataFormatada).subscribe(
       (res) => {
         this.jogos = res,
         this.addJogos(res)
@@ -104,7 +126,7 @@ export class DetalheBolaoComponent implements OnInit {
   }
 
   listarJogosRodada(rodada){
-    this.jogoService.listarPorRodada(this.filtroCampeonato.value, rodada).subscribe(
+    this.jogoService.listarPorRodada(this.campeonatoId, rodada).subscribe(
       (res) => {
         this.jogos = res,
         this.addJogos(res)
@@ -159,9 +181,12 @@ export class DetalheBolaoComponent implements OnInit {
   addJogos(jogos:Jogo[]){
     
     this.jogosF.clear();
+    let palpite:Palpite[] = [];
    
 
     jogos.forEach((j) => {
+      palpite = this.palpites.filter((p) => {return p.idJogo == j.id})
+
       let dataJogo = moment(j.dtJogo, "YYYY-MM-DD HH:mm").format("DD-MM-YYYY HH:mm")
       const jogosForm = this.fb.group({
         id:[''],
@@ -178,8 +203,8 @@ export class DetalheBolaoComponent implements OnInit {
 
       jogosForm.setValue({
         id:j.id,
-        placarTime1: j.placarTime1, 
-        placarTime2: j.placarTime2, 
+        placarTime1: palpite.length >0 ? palpite[0].placarTime1 : '', 
+        placarTime2: palpite.length >0  ? palpite[0].placarTime2 : '', 
         status:'ANDAMENTO',
         dtJogo:dataJogo,
         nomeTime1:j.nomeTime1,

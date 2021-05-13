@@ -8,11 +8,11 @@
                 <h4 class="page-title">Administração</h4>
               </li>
               <li class="breadcrumb-item bcrumb-1">
-                <a [routerLink]="['/administracao/time']">
+                <a routerLink="['/administracao/time']">
                   <i class="fas fa-home"></i> Home</a>
               </li>
               <li class="breadcrumb-item bcrumb-2">
-                <a href="#" [routerLink]="['/administracao/campeonato']" >Time</a>
+                <a href="#" routerLink="['/administracao/campeonato']" >Time</a>
               </li>
               <li class="breadcrumb-item active">Novo Time</li>
             </ul>
@@ -58,7 +58,7 @@
                     </mat-form-field>
                     <div>
                       <button *ngIf="timeEditId == undefined" mat-raised-button matStepperPrevious (click)="reset()" color="warn" class="mr-2">Voltar</button>
-                      <button mat-raised-button color="warn" class="mr-2" [routerLink]="['/administracao/time']" >Salvar sem imagem</button>
+                      <button mat-raised-button color="warn" class="mr-2" routerLink="['/administracao/time']" >Salvar sem imagem</button>
                       <button type="submit" mat-raised-button  color="primary" [disabled]="!form2.valid">Salvar</button>
                     </div>
                   </form>

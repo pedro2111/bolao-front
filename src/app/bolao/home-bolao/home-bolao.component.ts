@@ -12,6 +12,9 @@ import {
 } from "rxjs/operators";
 import { Subject } from 'rxjs';
 import { FormControl } from '@angular/forms';
+import { BolaoParticipante } from 'src/app/core/models/bolaoParticipante.model';
+import { BolaoParticipanteService } from 'src/app/core/service/bolao-participante.service';
+import { NotificationService } from 'src/app/core/service/notification.service';
 
 @Component({
   selector: 'app-home-bolao',
@@ -21,7 +24,10 @@ import { FormControl } from '@angular/forms';
 export class HomeBolaoComponent implements OnInit {
 
   constructor(
-    private bolaoService:BolaoService) { }
+    private bolaoService:BolaoService,
+    private bpService:BolaoParticipanteService,
+    private notificationService:NotificationService
+    ) { }
 
   boloes:Bolao[] = []
   totalElementos;
@@ -30,9 +36,12 @@ export class HomeBolaoComponent implements OnInit {
   size = 4;
   subject = new Subject<string>();
   pesquisa=''
+  boloesInscritos:BolaoParticipante[] = [];
+  idUsuarioLogado = localStorage.getItem('usuarioId');
 
   ngOnInit(): void {
     this.listarBoloes(this.page,this.size,this.pesquisa);
+    this.listarBoloesIncritos(this.idUsuarioLogado);
 
     this.subject.pipe(
       map(value => value.trim()),
@@ -43,6 +52,16 @@ export class HomeBolaoComponent implements OnInit {
       ).subscribe();
   }
 
+  public listarBoloesIncritos(idUsuarioLogado){
+
+    this.bpService.listarBoloesIncritos(idUsuarioLogado).subscribe(
+      (res) => {
+        this.boloesInscritos = res
+      }, (err) => {
+        console.log(err)
+      })
+
+  }
   public listarBoloes(page,size,pesquisa){
 
     if(pesquisa){
@@ -69,6 +88,22 @@ export class HomeBolaoComponent implements OnInit {
   getPage(page){
     this.page = page - 1;
     this.listarBoloes(this.page,this.size,'');
+  }
+  verificaParticipacao(idBolao, bolaoInscritos:BolaoParticipante[]){
+
+    return bolaoInscritos.some(bi => bi.idBolao == idBolao);
+
+  }
+  participarBolao(bolaoId){
+    
+    this.bpService.cadastrar(bolaoId,this.idUsuarioLogado).subscribe(
+      (res) => {
+        this.notificationService.showNotificationDuration('snackbar-success', 'Parabéns! agora você faz parte bolão! Se ele for privado, aguarde o ADM aceitar!', 'bottom', 'center',7000);
+        this.listarBoloesIncritos(this.idUsuarioLogado);
+        //fazer aqui o redirecionamento
+      },(err) => {
+        console.log(err)
+      })
   }
   pesquisar(event){
     const texto:string = event.target.value;

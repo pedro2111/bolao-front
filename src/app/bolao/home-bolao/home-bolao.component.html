@@ -36,23 +36,33 @@
                             <mat-card-header style="display: block !important;">
                                 <mat-card-title class="font-card-title">{{(bolao.nome.length > 20)?  (bolao.nome | slice:0:20)+'...' : bolao.nome}} </mat-card-title>
                                 <mat-card-subtitle>{{bolao.nomeCampeonato}}</mat-card-subtitle>
+                                <mat-card-subtitle>{{bolao.tipoBolao | lowercase}}</mat-card-subtitle>
       
                             </mat-card-header>
 
                             <mat-card-content>                                
                                 <img *ngIf="bolao.url == 'na' " class="m-0 mb-2 img-fluid" style="max-height: 256px; min-height: 182px;" mat-card-image src="assets/images/logo-bolao.png" alt="{{bolao.nome}}">
                                 <img *ngIf="bolao.url != 'na' " class="m-0 mb-2 img-fluid" style="max-height: 256px; min-height: 182px;" mat-card-image src="{{bolao.url}}" alt="{{bolao.nome}}">
+                              
                             </mat-card-content>                           
                 
                             <mat-divider role="separator" class="mat-divider mat-divider-horizontal" aria-orientation="horizontal"></mat-divider>
 
                             <mat-card-actions>
                                 <div fxLayout="row">
-                                    <button mat-stroked-button class="btn btn-outline-info mr-2">Espiar</button>          
+                                    <button mat-stroked-button class="btn btn-outline-info mr-2" [routerLink]="['/bolao/espiar',bolao.id]" >Espiar</button>          
                                     <span fxFlex></span>
-                                    <button *ngIf="bolao.tipoBolao == 'PRIVADO' " mat-stroked-button class="btn btn-outline-success" matTooltip="Este Bolão é Privado! Aguarde a aprovação do administrador.">Participar</button>
-                                    <button *ngIf="bolao.tipoBolao == 'LIVRE' " mat-stroked-button class="btn btn-outline-success" matTooltip="Este Bolão é livre!">Participar</button>
+                                    <button *ngIf="bolao.tipoBolao == 'PRIVADO' && !verificaParticipacao(bolao.id,boloesInscritos) " (click)="participarBolao(bolao.id)" mat-stroked-button class="btn btn-outline-success" matTooltip="Este Bolão é Privado! Aguarde a aprovação do administrador.">
+                                        Participar
+                                    </button>
+                                    <button *ngIf="bolao.tipoBolao == 'LIVRE' &&  !verificaParticipacao(bolao.id,boloesInscritos) "  (click)="participarBolao(bolao.id)" mat-stroked-button class="btn btn-outline-success" matTooltip="Este Bolão é livre!">
+                                        Participar
+                                    </button>
+                                    <div class="mt-1">
+                                        <span *ngIf="verificaParticipacao(bolao.id,boloesInscritos)" style="color: rgba(0,0,0,.54) !important;">Você já participa deste bolão!</span>
+                                    </div>
                                   </div>
+                      
                             </mat-card-actions>
                         </mat-card>
                     </div>

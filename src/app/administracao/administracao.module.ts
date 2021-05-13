@@ -32,8 +32,8 @@ import { HomeTimeComponent } from './time/home-time/home-time.component';
 import { NovoTimeComponent } from './time/novo-time/novo-time.component';
 import { HomeJogoComponent } from './jogo/home-jogo/home-jogo.component';
 import { NovoJogoComponent } from './jogo/novo-jogo/novo-jogo.component';
-import { HomeBolaoComponent } from './bolao/home-bolao/home-bolao.component';
 import { NovoBolaoComponent } from './bolao/novo-bolao/novo-bolao.component';
+import { HomeBolaoComponent } from './bolao/home-bolao/home-bolao.component';
 
 
 
