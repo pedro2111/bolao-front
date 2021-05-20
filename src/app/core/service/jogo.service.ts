@@ -50,5 +50,10 @@ export class JogoService {
 
   }
 
+  public listarRodadaAtual(campeonatoId:number){
+
+    return this.http.get<string>(`${environment.apiUrl}/jogos/campeonato/${campeonatoId}/rodada-atual`, {responseType: 'text' as 'json'} )
+  }
+
 
 }

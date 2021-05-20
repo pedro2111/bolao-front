@@ -22,7 +22,7 @@ import { Jogo } from 'src/app/core/models/jogo.model';
 export class HomeJogoComponent implements OnInit {
 
   form: FormGroup;
-  filterRadio? = 2;
+  filterRadio? = 1;
   campeonatoId?;
   filtro = new FormControl();
   filtroRodada = new FormControl();
@@ -124,7 +124,7 @@ export class HomeJogoComponent implements OnInit {
     jogo.id = id;
     jogo.placarTime1 = placarTime1;
     jogo.placarTime2 = placarTime2;
-    jogo.status = status;
+    jogo.status = 'ANDAMENTO';
 
     if(placarTime1 != null && placarTime1 != ""  && placarTime2 != null && placarTime2 != ""){
       
@@ -165,7 +165,7 @@ export class HomeJogoComponent implements OnInit {
         id:[''],
         placarTime1: ['', Validators.required],
         placarTime2: ['', Validators.required],
-        status: ['ANDAMENTO'],
+        status: [''],
         dtJogo: [dataJogo],
         nomeTime1:[''],
         nomeTime2:[''],
@@ -178,7 +178,7 @@ export class HomeJogoComponent implements OnInit {
         id:j.id,
         placarTime1: j.placarTime1, 
         placarTime2: j.placarTime2, 
-        status:'ANDAMENTO',
+        status:j.status,
         dtJogo:dataJogo,
         nomeTime1:j.nomeTime1,
         nomeTime2:j.nomeTime2,

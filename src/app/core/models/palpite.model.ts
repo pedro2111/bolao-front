@@ -1,6 +1,7 @@
 export class Palpite{
     id:number;
     idJogo:number;
+    idBolao:number;
     idUsuario:number;
     nomeTime1Jogo:string;
     nomeTime2Jogo:string;

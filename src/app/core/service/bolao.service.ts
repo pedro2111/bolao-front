@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Bolao } from '../models/bolao.model';
+import { Ranking } from '../models/ranking.model';
 
 @Injectable({
   providedIn: 'root'
@@ -74,6 +75,12 @@ export class BolaoService {
     }
 
     return this.http.put(`${environment.apiUrl}/boloes/dtpalpiteextra/${id}`, bolao, httpOptions);
+
+  }
+
+  public listarRanking(bolaoId){
+
+    return this.http.get<Ranking[]>(`${environment.apiUrl}/boloes/${bolaoId}/ranking`);
 
   }
 
