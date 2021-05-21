@@ -49,6 +49,10 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
   indexInvalido;
   ranking?:Ranking[];
   criteriosBolao?:BolaoCriterio[];
+  campeaoPts = 0;
+  vicePts = 0;
+  terceitoPts = 0;
+  quartoPts = 0;
   
 
   constructor(
@@ -120,11 +124,30 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
   listarCriteriosBolao(bolaoId){
     this.bcService.listarCriteriosBolao(bolaoId).subscribe(
       (res) => {
-        this.criteriosBolao = res
+        this.criteriosBolao = res,
+        this.definirCriteriosExtra(res)
       }, (err) => {
         console.log(err)
       }
     );
+  }
+  definirCriteriosExtra(bolaoCriterio: BolaoCriterio[]) {
+    
+    bolaoCriterio.forEach((bc) => {
+
+      if(bc.idCriterio == 5){
+        this.campeaoPts = bc.pontuacao;
+      }
+      if(bc.idCriterio == 6){
+        this.vicePts = bc.pontuacao;
+      }
+      if(bc.idCriterio == 7){
+        this.terceitoPts = bc.pontuacao;
+      }
+      if(bc.idCriterio == 8){
+        this.quartoPts = bc.pontuacao;
+      }
+    });
   }
 
   listarPalpitesUsuario(bolaoId,usuarioId,rodada){

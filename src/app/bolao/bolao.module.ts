@@ -21,6 +21,7 @@ import { MatAutocompleteModule} from '@angular/material/autocomplete';
 import { NgxMaskModule } from 'ngx-mask';
 import { MatRadioModule} from '@angular/material/radio';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule} from '@angular/material/expansion';
 
 
 
@@ -49,7 +50,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     NgxMaskModule,
     MatRadioModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
+    MatExpansionModule
 
 
   ]
