@@ -114,7 +114,21 @@
             
                                             </div>
                                             <div class="d-flex flex-row fill-sm justify-content-center align-content-center align-items-center mb-2">
+                                                <div class="fill-sm mr-lg-3" style="font-size: 12px">
+                                                    <mat-form-field [style.width.%]="100" appearance="outline">
+                                                        <mat-label>Selecione um status...</mat-label>
+                                                        <mat-select  formControlName="status" (selectionChange)="atualizarJogo(i)">
+                                                            <mat-option value="CRIADO">Criado</mat-option>
+                                                            <mat-option value="ANDAMENTO">Andamento</mat-option>
+                                                            <mat-option value="ENCERRADO">Encerrado</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="d-flex flex-row fill-sm justify-content-center align-content-center align-items-center mb-2">
                                                 <small style="color: #999;">{{jogos[i].local}}</small>
+
                                             </div>
                                    
                                         </mat-card>

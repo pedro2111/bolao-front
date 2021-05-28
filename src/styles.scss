@@ -28,6 +28,15 @@ th.mat-header-cell {
         -ms-flex-align: center;
         -ms-flex-item-align: center;
     }
+    .radio-collum-sm{
+        display: flex;
+        flex-direction: column;
+        
+    }
+    .radio-collum-button-sm{
+        margin: 5px;
+        margin-left: 0 !important;
+    }
     
  }
  @media (min-width: 600px) { 

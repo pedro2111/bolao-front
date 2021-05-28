@@ -1,14 +1,8 @@
-export class Ranking{
+export class RankingExtra{
 
     posicao:number;
-    id:number;
     nome:string;
     totalpontosganho:string;
-    totalpontosganhoextra:string;
-    pe:number;
-    rcg:number;
-    rc:number;
-    ge:number;
     campeao:number;
     vice:number;
     terceiro:number;

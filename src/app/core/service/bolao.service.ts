@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Bolao } from '../models/bolao.model';
 import { Ranking } from '../models/ranking.model';
+import { RankingExtra } from '../models/rankingExtra.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,11 @@ export class BolaoService {
   public listarAllBoloes(){
 
       return this.http.get<Bolao[]>(`${environment.apiUrl}/boloes/listar-sem-paginacao`);
+
+  }
+  public listarBoloesByCampeonato(campeonatoId){
+
+      return this.http.get<Bolao[]>(`${environment.apiUrl}/boloes/campeonato/${campeonatoId}`);
 
   }
   public listarBolaoById(id){
@@ -81,6 +87,11 @@ export class BolaoService {
   public listarRanking(bolaoId){
 
     return this.http.get<Ranking[]>(`${environment.apiUrl}/boloes/${bolaoId}/ranking`);
+
+  }
+  public listarRankingExtra(bolaoId){
+
+    return this.http.get<RankingExtra[]>(`${environment.apiUrl}/boloes/${bolaoId}/ranking-extra`);
 
   }
 

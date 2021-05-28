@@ -13,6 +13,9 @@ import {
 } from "rxjs/operators";
 import * as moment from 'moment';
 import { Jogo } from 'src/app/core/models/jogo.model';
+import { BolaoService } from 'src/app/core/service/bolao.service';
+import { Bolao } from 'src/app/core/models/bolao.model';
+import { PalpiteService } from 'src/app/core/service/palpite.service';
 
 @Component({
   selector: 'app-home-jogo',
@@ -30,6 +33,7 @@ export class HomeJogoComponent implements OnInit {
   filtroCampeonato = new FormControl('nulo');
   criador_id = localStorage.getItem('usuarioId');
   campeonatos;
+  boloes:Bolao[] = [];
   jogos;
   rodadas;
   loadingJogos = false;
@@ -38,6 +42,8 @@ export class HomeJogoComponent implements OnInit {
     private fb:FormBuilder,
     private jogoService:JogoService,
     private campeonatoService:CampeonatoService,
+    private bolaoService:BolaoService,
+    private palpiteService:PalpiteService,
     private notificationService:NotificationService
   ) { }
 
@@ -47,7 +53,8 @@ export class HomeJogoComponent implements OnInit {
       
     this.filtroCampeonato.valueChanges.subscribe(
       (res)=>{
-        this.listarRodadas(res);
+        this.listarRodadas(res),
+        this.listarBoloesByCampeonato(res)
         
       },(err) => {
       })
@@ -87,6 +94,16 @@ export class HomeJogoComponent implements OnInit {
         this.campeonatos = res;
       });
   }
+  listarBoloesByCampeonato(campeonatoId){
+
+    this.bolaoService.listarBoloesByCampeonato(campeonatoId).subscribe(
+      (res) => {
+        this.boloes = res
+      },(err) => {
+        console.log(err)
+      }
+    );
+  }
 
   listarJogosData(data:string){
     let dt = moment(data, 'DD-MM-YYYY');
@@ -113,7 +130,20 @@ export class HomeJogoComponent implements OnInit {
        })
 
   }
+  calcularPontosGanhos(boloes:Bolao[]){
+    
+    boloes.forEach((b) => {
+      this.palpiteService.calcularPontosGanhos(b.id).subscribe(
+        (res) => {
+
+        }, (err) =>{
+          console.log(err)
+        }
+      );
+    });
+  }
   atualizarJogo(index){
+
 
     let placarTime1 = this.jogosF.getRawValue()[index]['placarTime1'];
     let placarTime2 = this.jogosF.getRawValue()[index]['placarTime2'];
@@ -124,13 +154,13 @@ export class HomeJogoComponent implements OnInit {
     jogo.id = id;
     jogo.placarTime1 = placarTime1;
     jogo.placarTime2 = placarTime2;
-    jogo.status = 'ANDAMENTO';
+    jogo.status = status;
 
-    if(placarTime1 != null && placarTime1 != ""  && placarTime2 != null && placarTime2 != ""){
+    if(jogo.placarTime1 != null   && jogo.placarTime2 != null && jogo.status != 'CRIADO'){
       
       this.jogoService.atualizar(jogo).subscribe(
         (res)=>{
-          
+          this.calcularPontosGanhos(this.boloes)
         }, (err) => {
           console.log(err)
         });

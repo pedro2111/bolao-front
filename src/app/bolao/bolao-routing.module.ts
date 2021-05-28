@@ -6,7 +6,8 @@ import { HomeBolaoComponent } from './home-bolao/home-bolao.component';
 
 const routes: Routes = [
   { path: '', component: HomeBolaoComponent },
-  { path: 'espiar/:id', component: DetalheBolaoComponent }
+  { path: 'espiar/:id', component: DetalheBolaoComponent },
+  { path: 'espiar/:id/usuario/:IdUsuarioVisitado', component: DetalheBolaoComponent }
 ];
 
 @NgModule({
