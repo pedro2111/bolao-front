@@ -25,6 +25,8 @@ import { Time } from 'src/app/core/models/time.model';
 import { PalpiteExtra } from 'src/app/core/models/palpiteExtra.model';
 import { RankingExtra } from 'src/app/core/models/rankingExtra.model';
 import { ɵangular_material_src_cdk_accordion_accordion_a } from '@angular/cdk/accordion';
+import { BolaoParticipante } from 'src/app/core/models/bolaoParticipante.model';
+import { BolaoParticipanteService } from 'src/app/core/service/bolao-participante.service';
 
 @Component({
   selector: 'app-detalhe-bolao',
@@ -40,7 +42,7 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
   filtroRodada = new FormControl();
   filtroData = new FormControl();
   usuarioId = localStorage.getItem('usuarioId');
-  usuarioAtual = localStorage.getItem('usuarioId');
+  usuarioAtual = Number.parseInt(localStorage.getItem('usuarioId'));
   nomeUsuario = localStorage.getItem('nomeUsuario');
   jogos;
   rodadas;
@@ -71,6 +73,7 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
   times:Time[] = [];
   participaBolao? = false;
   tabselected;
+  bolaoParticipantes:BolaoParticipante[] = [];
 
   
 
@@ -82,6 +85,7 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
     private bcService:BolaoCriterioService,
     private notificationService:NotificationService,
     private palpiteService:PalpiteService,
+    private bpService:BolaoParticipanteService,
     private route:ActivatedRoute
   ) { }
 
@@ -112,6 +116,7 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
         this.listarBolao(this.bolaoId);
         this.listarRanking(this.bolaoId);
         this.listarCriteriosBolao(this.bolaoId);
+        this.listarParticipantes(this.bolaoId);
 
       this.listarPalpitesExtra(this.bolaoId,this.usuarioId);
       
@@ -209,8 +214,8 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
     
     this.bolaoService.listarRanking(bolaoId).subscribe(
       (res) => {
-        this.ranking = res,
-        this.verificaParticipacaoBolao(res);
+        this.ranking = res
+        
       }, (err) => {
         console.log(err)
       }
@@ -225,10 +230,17 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
       }
     );
   }
-  verificaParticipacaoBolao(ranking:Ranking[]){
+  listarParticipantes(bolaoId){
     
-    ranking.forEach((r) => {
-      if(r.nome === this.nomeUsuario){
+    this.bpService.listarBolaoParticipantes(bolaoId).subscribe(
+      (res) => {
+        this.verificaParticipacaoBolao(res);
+      });
+  }
+  verificaParticipacaoBolao(bolaoParticipantes:BolaoParticipante[]){
+    
+    bolaoParticipantes.forEach((bp) => {
+      if(bp.idParticipante === this.usuarioAtual){
         
         this.participaBolao = true;
       }
@@ -369,6 +381,8 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
 
   diffMinutes(dtJogo):boolean{
     
+    if(dtJogo != null){
+
     let now = moment();
     let dataJogo = moment(new Date(dtJogo[0],dtJogo[1]-1,dtJogo[2],dtJogo[3],dtJogo[4]+1));
        
@@ -378,6 +392,11 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
     }else{
       return true;
     }
+
+    }else{
+      return false;
+    }
+    
    
   }
   atualizarPalpiteExtra(criterioId,timeId){
