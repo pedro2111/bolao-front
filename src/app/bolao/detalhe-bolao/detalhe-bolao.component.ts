@@ -72,7 +72,7 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
   usuarioVisita = null;
   times:Time[] = [];
   participaBolao? = false;
-  tabselected;
+  tabselected = 0;
   bolaoParticipantes:BolaoParticipante[] = [];
 
   
