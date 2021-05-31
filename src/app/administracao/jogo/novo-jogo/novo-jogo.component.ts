@@ -78,6 +78,7 @@ export class NovoJogoComponent implements OnInit {
   }
 
   cadastrar() {
+    let dtTemp = this.form.get('dtJogo').value;
     let dtFormat = moment(this.form.get('dtJogo').value, 'DD-MM-YYYY hh:mm');
     this.form.controls['dtJogo'].setValue(dtFormat.format('YYYY-MM-DD HH:mm'))
 
@@ -89,6 +90,7 @@ export class NovoJogoComponent implements OnInit {
         this.notificationService.showNotification('snackbar-success', 'Jogo cadastrado com sucesso!', 'top', 'right');
         this.form.get('time1_id').setValue('')
         this.form.get('time2_id').setValue('')
+        this.form.get('dtJogo').setValue(dtTemp)
         //this.initForm();
 
       }, (err) => {

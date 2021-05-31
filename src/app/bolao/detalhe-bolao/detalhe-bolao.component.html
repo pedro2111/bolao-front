@@ -29,7 +29,11 @@
                     <div class="body">
                         <mat-tab-group [selectedIndex]="tabselected" (selectedIndexChange)="changeTab($event)">
                             <mat-tab label="Palpites" *ngIf="participaBolao || usuarioVisita != null">
-                                <div class="row clearfix overflow-hidden mt-2">
+                                
+                                <div class="mt-5" *ngIf="usuarioStatus == 'INATIVO' ">
+                                    <b>Você já participa deste bolão, porém o administrador ainda não ativou sua participação. Aguarde! </b> 
+                                </div>
+                                <div class="row clearfix overflow-hidden mt-2" *ngIf="usuarioStatus == 'ATIVO' ">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 ">
                                         <div class="card">
 

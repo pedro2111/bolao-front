@@ -74,6 +74,7 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
   participaBolao? = false;
   tabselected = 0;
   bolaoParticipantes:BolaoParticipante[] = [];
+  usuarioStatus? = '';
 
   
 
@@ -113,10 +114,11 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
 
       }      
         this.bolaoId = param.get('id');
+        this.listarParticipantes(this.bolaoId);
         this.listarBolao(this.bolaoId);
         this.listarRanking(this.bolaoId);
         this.listarCriteriosBolao(this.bolaoId);
-        this.listarParticipantes(this.bolaoId);
+        
 
       this.listarPalpitesExtra(this.bolaoId,this.usuarioId);
       
@@ -150,13 +152,15 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
         this.listarRodadaAtual(res.idCampeonato),
         this.campeonatoId = res.idCampeonato,
         this.listarTimesCampeonato(res.idCampeonato)
-               
-        if((this.diffMinutes(res.dtLimitePalpiteExtra) && res.dtLimitePalpiteExtra.length > 0) || !this.permissaoPalpitar()){
+        
+        
+        if(this.diffMinutes(res.dtLimitePalpiteExtra) && res.dtLimitePalpiteExtra != null ){
           this.formCampeao.disable();
           this.formVice.disable();
           this.formTerceiro.disable();
           this.formQuarto.disable();
         }
+
       }, (err) => {
         console.log(err)
       });
@@ -239,12 +243,28 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
   }
   verificaParticipacaoBolao(bolaoParticipantes:BolaoParticipante[]){
     
-    bolaoParticipantes.forEach((bp) => {
+   
+      if(bolaoParticipantes.some(bp => bp.idParticipante === this.usuarioAtual)){
+        this.participaBolao = true;
+        bolaoParticipantes.forEach((bp) => {
+          if(bp.idParticipante === this.usuarioAtual){
+            this.usuarioStatus = bp.status;
+          }
+        });
+      
+      }else{
+        this.formCampeao.disable();
+        this.formVice.disable();
+        this.formTerceiro.disable();
+        this.formQuarto.disable();
+      }
+
+       /*bolaoParticipantes.forEach((bp) => {
       if(bp.idParticipante === this.usuarioAtual){
         
-        this.participaBolao = true;
-      }
-    });
+      });
+      */
+    
   }
   buildRanking(){
     
@@ -577,7 +597,14 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
     return this.form.controls['jogos'] as FormArray;
   }
   permissaoPalpitar(){
-    return (this.usuarioVisita != null && this.participaBolao && this.usuarioAtual == this.usuarioVisita);
+    if(this.usuarioVisita != null){
+      return (this.usuarioVisita != null && this.participaBolao && this.usuarioAtual == this.usuarioVisita);
+      
+    }else{
+      return (this.participaBolao);
+      
+    }
+    
   }
 
   addJogos(jogos:Jogo[]){
@@ -592,7 +619,7 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
       const jogosForm = this.fb.group({
         id:[''],
         palpiteId:[''],
-        placarTime1: [{value:'', disabled: this.diffMinutes(j.dtJogo) || !this.permissaoPalpitar() }, Validators.required],
+        placarTime1: [{value:'', disabled: this.diffMinutes(j.dtJogo) || (!this.permissaoPalpitar() ) }, Validators.required],
         placarTime2: [{value:'', disabled: this.diffMinutes(j.dtJogo) || !this.permissaoPalpitar()}, Validators.required],
         status: [''],
         dtJogo: [dataJogo],
