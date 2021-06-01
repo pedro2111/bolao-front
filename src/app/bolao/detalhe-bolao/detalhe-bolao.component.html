@@ -33,7 +33,7 @@
                                 <div class="mt-5" *ngIf="usuarioStatus == 'INATIVO' ">
                                     <b>Você já participa deste bolão, porém o administrador ainda não ativou sua participação. Aguarde! </b> 
                                 </div>
-                                <div class="row clearfix overflow-hidden mt-2" *ngIf="usuarioStatus == 'ATIVO' ">
+                                <div class="row clearfix overflow-hidden mt-2" *ngIf="usuarioStatus == 'ATIVO' || usuarioVisita != null">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 ">
                                         <div class="card">
 
@@ -74,6 +74,9 @@
 
                                                 <div *ngIf="filterRadio == 3 && bolao.dtLimitePalpiteExtra == null">
                                                     <b>Este bolão não está com a funcionalidade palpite extra Ativada. Entre em contato com o dono do bolão em caso de dúvidas. </b> 
+                                                </div>
+                                                <div class="mt-2 mb-2 d-flex flex-row fill-sm justify-content-center align-content-center align-items-center">
+                                                    <b>{{nomeUsuarioVisitado}} </b> 
                                                 </div>
 
                                                <div *ngIf="filterRadio == 3 && bolao.dtLimitePalpiteExtra != null">
@@ -243,17 +246,13 @@
                                                                         </div>
 
                                                                         <div class="font-icon">
-                                                                            <div class="icon-preview animate__animated animate__bounce"
-                                                                                style="color: green;"
-                                                                                *ngIf="jogosForm.valid"><i
-                                                                                    class="fas fa-check-circle"></i>
+                                                                            <div class="icon-preview animate__animated animate__bounce" style="color: green;" *ngIf="jogosForm.valid"><i class="fas fa-check-circle"></i>
                                                                             </div>
-                                                                            <div class="icon-preview animate__animated animate__bounce"
-                                                                                style="color: red;"
-                                                                                *ngIf="!jogosForm.valid"><i
-                                                                                    class="fas fa-check-circle"></i>
+                                                                            <div class="icon-preview animate__animated animate__bounce" style="color: red;" *ngIf="!jogosForm.valid "><i class="fas fa-check-circle"></i>
                                                                             </div>
                                                                         </div>
+                                                                        
+                                                                        
 
                                                                     </div>
                                                                     <div

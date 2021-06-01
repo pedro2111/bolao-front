@@ -97,9 +97,16 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
 
+    this.sidebarItems = ROUTES.filter((sidebarItem) => sidebarItem);
+
     this.userService.listarUsuarioById(localStorage.getItem('usuarioId')).subscribe(
       (res) => {
-        this.usuario = res
+        this.usuario = res,        
+        this.sidebarItems.forEach((s,index) => {
+          if(s.title == 'Administração' && this.usuario.perfis[0].nome === 'ROLE_USER' ){
+            this.sidebarItems.splice(index,1);
+          }
+        })
       },(err) => {
         console.log(err), 
         this.notificationService.showNotification('snackbar-danger', 'Falha na autenticação! Realizar login novamente!', 'bottom', 'center');
@@ -110,8 +117,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
       }
     )
     //--------
-
-    this.sidebarItems = ROUTES.filter((sidebarItem) => sidebarItem);
 
     this.initLeftSidebar();
     this.bodyTag = this.document.body;

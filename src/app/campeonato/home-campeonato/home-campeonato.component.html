@@ -30,8 +30,8 @@
                 <img *ngIf="camp.url == 'na' " class="m-0 mb-2 img-fluid" style="max-height: 256px; min-height: 182px;" mat-card-image src="assets/images/logo-bolao.png" alt="{{camp.nome}}">
                 <img *ngIf="camp.url != 'na' " class="m-0 mb-2 img-fluid" style="max-height: 256px; min-height: 182px;" mat-card-image src="{{camp.url}}" alt="{{camp.nome}}">
                 <mat-divider  role="separator" class="mat-divider mat-divider-horizontal" aria-orientation="horizontal"></mat-divider>
-                <mat-card-actions>
-                  <button type="button" class="btn btn-outline-success w-100">Criar Bolão</button>
+                <mat-card-actions matTooltip="Função desabilitada no momento!">
+                  <button type="button" [disabled]="true"  class="btn btn-outline-success w-100">Criar Bolão</button>
                 </mat-card-actions>
               </mat-card>
             </div>

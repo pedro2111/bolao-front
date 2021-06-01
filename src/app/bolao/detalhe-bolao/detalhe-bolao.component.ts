@@ -44,6 +44,7 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
   usuarioId = localStorage.getItem('usuarioId');
   usuarioAtual = Number.parseInt(localStorage.getItem('usuarioId'));
   nomeUsuario = localStorage.getItem('nomeUsuario');
+  nomeUsuarioVisitado = '';
   jogos;
   rodadas;
   loadingJogos = false;
@@ -154,7 +155,7 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
         this.listarTimesCampeonato(res.idCampeonato)
         
         
-        if(this.diffMinutes(res.dtLimitePalpiteExtra) && res.dtLimitePalpiteExtra != null ){
+        if(this.diffMinutes(res.dtLimitePalpiteExtra) && res.dtLimitePalpiteExtra != null || this.usuarioAtual != this.usuarioVisita ){
           this.formCampeao.disable();
           this.formVice.disable();
           this.formTerceiro.disable();
@@ -250,6 +251,7 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
           if(bp.idParticipante === this.usuarioAtual){
             this.usuarioStatus = bp.status;
           }
+
         });
       
       }else{
@@ -332,6 +334,7 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
     this.palpiteService.listarPalpitesUsuarioBolao(bolaoId,usuarioId,rodada).subscribe(
       (res) => {
         this.palpites = res,
+        this.nomeUsuarioVisitado = res[0].nomeUsuario
         this.listarJogosRodada(rodada)
       }
     );
@@ -619,7 +622,7 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
       const jogosForm = this.fb.group({
         id:[''],
         palpiteId:[''],
-        placarTime1: [{value:'', disabled: this.diffMinutes(j.dtJogo) || (!this.permissaoPalpitar() ) }, Validators.required],
+        placarTime1: [{value:'', disabled: this.diffMinutes(j.dtJogo) || !this.permissaoPalpitar()}, Validators.required],
         placarTime2: [{value:'', disabled: this.diffMinutes(j.dtJogo) || !this.permissaoPalpitar()}, Validators.required],
         status: [''],
         dtJogo: [dataJogo],
@@ -646,10 +649,13 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
         rodada: j.rodada,
        });
       this.jogosF.push(jogosForm);
+
+      jogosForm.get('placarTime1').invalid
+     
     })
     this.loadingJogos = true;
 
-   // console.log(this.jogosF.controls)
+    
     
   }
 

@@ -7,6 +7,7 @@ import { MatCardModule} from '@angular/material/card';
 import { MatButtonModule} from '@angular/material/button';
 import { MatDividerModule} from '@angular/material/divider';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [HomeCampeonatoComponent],
@@ -16,7 +17,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MatCardModule,
     MatButtonModule,
     MatDividerModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MatTooltipModule
   ]
 })
 export class CampeonatoModule { }
