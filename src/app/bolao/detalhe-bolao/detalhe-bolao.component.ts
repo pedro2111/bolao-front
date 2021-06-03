@@ -154,8 +154,9 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
         this.campeonatoId = res.idCampeonato,
         this.listarTimesCampeonato(res.idCampeonato)
         
-        
-        if(this.diffMinutes(res.dtLimitePalpiteExtra) && res.dtLimitePalpiteExtra != null || this.usuarioAtual != this.usuarioVisita ){
+     
+        if((this.diffMinutes(res.dtLimitePalpiteExtra) && res.dtLimitePalpiteExtra != null) || (this.usuarioVisita != null && this.usuarioAtual != this.usuarioVisita) ){
+          
           this.formCampeao.disable();
           this.formVice.disable();
           this.formTerceiro.disable();
@@ -255,6 +256,7 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
         });
       
       }else{
+        
         this.formCampeao.disable();
         this.formVice.disable();
         this.formTerceiro.disable();
@@ -269,24 +271,38 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
     
   }
   buildRanking(){
-    
-    for(let i in this.ranking){
-      this.rankingExtra.forEach((re) => {
-        if(this.ranking[i].nome === re.nome){
-          this.ranking[i]['totalpontos'] = parseInt(this.ranking[i].totalpontosganho) + parseInt(re.totalpontosganho);
-          this.ranking[i]['totalpontosganhoextra'] = re.totalpontosganho;
-          this.ranking[i]['campeao'] = re.campeao;
-          this.ranking[i]['vice'] = re.vice;
-          this.ranking[i]['terceiro'] = re.terceiro;
-          this.ranking[i]['quarto'] = re.quarto;
-        }
-      });
 
+    if(this.rankingExtra.length > 0){
+      for(let i in this.ranking){
+        this.rankingExtra.forEach((re) => {
+          if(this.ranking[i].nome === re.nome){
+            this.ranking[i]['totalpontos'] = parseInt(this.ranking[i].totalpontosganho) + parseInt(re.totalpontosganho);
+            this.ranking[i]['totalpontosganhoextra'] = re.totalpontosganho;
+            this.ranking[i]['campeao'] = re.campeao;
+            this.ranking[i]['vice'] = re.vice;
+            this.ranking[i]['terceiro'] = re.terceiro;
+            this.ranking[i]['quarto'] = re.quarto;
+          }
+        });
+
+      }
       this.ranking.sort((a,b) => {
+          
+        return b['totalpontos'] - a['totalpontos'] || b['pe'] - a['pe'] || b['rcg'] - a['rcg'] || b['rc'] - a['rc'] || b['ge'] - a['ge']
+      })
+
+    }else{
+      for(let i in this.ranking){
         
+        this.ranking[i]['totalpontos'] = parseInt(this.ranking[i].totalpontosganho);
+        this.ranking[i]['totalpontosganhoextra'] = '0'
+      }
+      this.ranking.sort((a,b) => {
+          
         return b['totalpontos'] - a['totalpontos'] || b['pe'] - a['pe'] || b['rcg'] - a['rcg'] || b['rc'] - a['rc'] || b['ge'] - a['ge']
       })
       
+
     }
 
   }
@@ -333,8 +349,12 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
 
     this.palpiteService.listarPalpitesUsuarioBolao(bolaoId,usuarioId,rodada).subscribe(
       (res) => {
-        this.palpites = res,
-        this.nomeUsuarioVisitado = res[0].nomeUsuario
+        this.palpites = res;
+
+        if(res.length > 0){
+          this.nomeUsuarioVisitado = res[0].nomeUsuario;
+        }
+        
         this.listarJogosRodada(rodada)
       }
     );

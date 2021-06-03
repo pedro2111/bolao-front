@@ -53,8 +53,11 @@ export class HomeJogoComponent implements OnInit {
       
     this.filtroCampeonato.valueChanges.subscribe(
       (res)=>{
+        if(res != undefined){
         this.listarRodadas(res),
         this.listarBoloesByCampeonato(res)
+        }
+        
         
       },(err) => {
       })
@@ -156,7 +159,17 @@ export class HomeJogoComponent implements OnInit {
     jogo.placarTime2 = placarTime2;
     jogo.status = status;
 
-    if(jogo.placarTime1 != null   && jogo.placarTime2 != null && jogo.status != 'CRIADO'){
+    if(jogo.status == 'ENCERRADO'){
+      this.jogoService.atualizar(jogo).subscribe(
+        (res)=>{
+          
+        }, (err) => {
+          console.log(err)
+        });
+
+    }
+
+    if(jogo.placarTime1 != null   && jogo.placarTime2 != null && jogo.status == 'ANDAMENTO'){
       
       this.jogoService.atualizar(jogo).subscribe(
         (res)=>{

@@ -79,7 +79,9 @@
                                                     <b>{{nomeUsuarioVisitado}} </b> 
                                                 </div>
 
-                                               <div *ngIf="filterRadio == 3 && bolao.dtLimitePalpiteExtra != null">
+                                               <div *ngIf="(filterRadio == 3 && bolao.dtLimitePalpiteExtra != null && usuarioVisita == null) 
+                                               || (filterRadio == 3 && bolao.dtLimitePalpiteExtra != null && usuarioVisita != null && usuarioAtual == usuarioVisita) 
+                                               || (filterRadio == 3 && bolao.dtLimitePalpiteExtra != null && usuarioVisita != null && usuarioAtual != usuarioVisita && diffMinutes(bolao.dtLimitePalpiteExtra) == true)">
                                                 <mat-card class="">
                                                     <div class="d-flex flex-row fill-sm justify-content-center align-content-center align-items-center mb-3 p-2">
 
@@ -349,14 +351,14 @@
                                                 <th>Rank</th>
                                                 <th>Nome</th>
                                                 <th>Pontos</th>
-                                                <th> Pontos extras</th>
+                                                <th>Pontos extras</th>
                                                 <th>PE</th>
                                                 <th>RCG</th>
                                                 <th>RC</th>
                                                 <th>GE</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody *ngIf="ranking != undefined">
                                             <tr *ngFor="let rank of ranking; let i = index"
                                                 [ngClass]="{'table-secondary': rank.nome == nomeUsuario}">
                                                 <td>{{i+1}}</td>
@@ -366,7 +368,7 @@
                                                 <td>{{rank.pe}}</td>
                                                 <td>{{rank.rcg}}</td>
                                                 <td>{{rank.rc}}</td>
-                                                <td>{{rank.pe}}</td>
+                                                <td>{{rank.ge}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
