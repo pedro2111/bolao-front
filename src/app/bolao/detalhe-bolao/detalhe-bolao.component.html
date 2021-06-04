@@ -270,30 +270,36 @@
                                                                                     class="d-flex justify-content-center">{{jogos[i].nomeTime1}}</small>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="mr-2 fill-sm"
-                                                                            style="font-size: 10px;">
-                                                                            <mat-form-field class=""
-                                                                                style="width: 40px; height: 25px;"
-                                                                                appearance="outline">
-                                                                                <input
+                                                                        <div class="mr-2 fill-sm" style="font-size: 10px;">
+                                                                            <mat-form-field class="" style="width: 40px; height: 25px;" appearance="outline">
+                                                                                <input *ngIf="((usuarioVisita != null && usuarioAtual != usuarioVisita && diffMinutes(jogos[i].dtJogo) == true) || usuarioAtual == usuarioVisita) || usuarioVisita == null"
                                                                                     style="text-align: center !important"
                                                                                     formControlName="placarTime1"
                                                                                     matInput
                                                                                     (blur)="atualizarPalpite(i)" />
+
+                                                                                <input *ngIf="(!(usuarioVisita != null && usuarioAtual != usuarioVisita && diffMinutes(jogos[i].dtJogo) == true) && usuarioAtual != usuarioVisita) && usuarioVisita != null"
+                                                                                    style="text-align: center !important"                                                                                    
+                                                                                    matInput
+                                                                                    [disabled]="true"
+                                                                                    />
                                                                             </mat-form-field>
                                                                         </div>
                                                                         <div class="mr-2 mt-3 fill-sm"> VS </div>
 
-                                                                        <div class="mr-4 fill-sm"
-                                                                            style="font-size: 10px">
-                                                                            <mat-form-field class="example-full-width"
-                                                                                style="width: 40px; height: 25px;"
-                                                                                appearance="outline">
-                                                                                <input
+                                                                        <div class="mr-4 fill-sm" style="font-size: 10px">
+                                                                            <mat-form-field class="example-full-width" style="width: 40px; height: 25px;" appearance="outline">
+
+                                                                                <input *ngIf="((usuarioVisita != null && usuarioAtual != usuarioVisita && diffMinutes(jogos[i].dtJogo) == true) || usuarioAtual == usuarioVisita) || usuarioVisita == null"
                                                                                     style="text-align: center !important"
                                                                                     formControlName="placarTime2"
                                                                                     matInput
                                                                                     (blur)="atualizarPalpite(i)" />
+                                                                                <input *ngIf="(!(usuarioVisita != null && usuarioAtual != usuarioVisita && diffMinutes(jogos[i].dtJogo) == true) && usuarioAtual != usuarioVisita) && usuarioVisita != null"
+                                                                                    style="text-align: center !important"                                                                                    
+                                                                                    matInput
+                                                                                    [disabled]="true"
+                                                                                />
                                                                             </mat-form-field>
                                                                         </div>
                                                                         <div class="fill-sm">
