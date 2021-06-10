@@ -3,6 +3,7 @@ export class Ranking{
     posicao:number;
     id:number;
     nome:string;
+    url:string;
     totalpontosganho:string;
     totalpontosganhoextra:string;
     pe:number;

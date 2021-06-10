@@ -368,7 +368,12 @@
                                             <tr *ngFor="let rank of ranking; let i = index"
                                                 [ngClass]="{'table-secondary': rank.nome == nomeUsuario}">
                                                 <td>{{i+1}}</td>
-                                                <td><a href="#" [routerLink]="['/bolao/espiar',bolaoId,'usuario',rank.id]" (click)="changeTab(0)"> {{rank.nome}}</a> </td>
+                                                <td ><a href="#" [routerLink]="['/bolao/espiar',bolaoId,'usuario',rank.id]" (click)="changeTab(0)">
+                                                    <img *ngIf="rank?.url != 'na'" src="{{rank?.url}}" class="img-user-rank mr-2" alt="User Image" />
+                                                    <img *ngIf="rank?.url == 'na' " src="assets/images/logo-bolao.png" class="img-user-rank" alt="User Image" />
+                                                    {{rank.nome}}
+                                                    </a> 
+                                                </td>
                                                 <td>{{rank.totalpontos}}</td>
                                                 <td>{{rank.totalpontosganhoextra}}</td>
                                                 <td>{{rank.pe}}</td>
