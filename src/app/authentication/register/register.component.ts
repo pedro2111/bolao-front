@@ -58,7 +58,8 @@ export class RegisterComponent implements OnInit {
 
       const file_form: FileInput = this.form2.get('imagem').value;
 
-      const file = file_form.files[0];
+      //const file = file_form.files[0];
+      const file = this.form2.get('imagem').value;
 
       this.formData.append('usuario_id', this.usuario_id)
       this.formData.append('imagem', file)

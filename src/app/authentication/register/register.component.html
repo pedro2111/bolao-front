@@ -49,15 +49,18 @@
                     </form>
                     <form [formGroup]="form2" (submit)="uploadFoto()" *ngIf="showFormFoto" class="animate__animated animate__bounceInRight" novalidate enctype="multipart/form-data">
                       
-                      <mat-form-field class="example-full-width" appearance="outline">
+                      <!--<mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Selecione uma foto...</mat-label>
                         <ngx-mat-file-input formControlName="imagem" placeholder="Selecione uma imagem..."> </ngx-mat-file-input>
                         <mat-icon matSuffix>cloud_upload</mat-icon>
-                      <!-- <input (chage)="onFileSelect($event)" type="file" accept="image/png, image/jpeg, image/gif" required> -->
+                        
+                       <input (chage)="onFileSelect($event)" type="file" accept="image/png, image/jpeg, image/gif" required> 
                     
                       </mat-form-field>
+                      -->
+                      <input type="file" formControlName="imagem" (change)="onFileSelect($event)" />
 
-                      <div class="container-login100-form-btn">
+                      <div class="container-login100-form-btn mt-3">
                         <button mat-flat-button color="primary" class="login100-form-btn" type="submit" [class.spinner]="loading" [disabled]="loading || !form2.valid">
                           Salvar Foto
                         </button>
