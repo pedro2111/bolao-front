@@ -12,7 +12,7 @@
                                 <i class="fas fa-home"></i> Home</a>
                         </li>
                         <li class="breadcrumb-item bcrumb-2">
-                            <a href="#" onClick="return false;">Jogo</a>
+                            <a href="#">Jogo</a>
                         </li>
                         <li class="breadcrumb-item active">Home Jogos</li>
                     </ul>
@@ -214,7 +214,7 @@
                                                </div>                                               
 
 
-                                                <div class="m4-4" *ngIf="loadingJogos && (filterRadio == 1 || filterRadio == 2)" [formGroup]="form" (ngSubmit)="cadastrar()">
+                                                <div class="m4-4" *ngIf="loadingJogos && (filterRadio == 1 || filterRadio == 2)" [formGroup]="form" >
                                                     <ng-container formArrayName="jogosF">
                                                         <ng-container
                                                             *ngFor="let jogosForm of jogosF.controls; index as i">
@@ -374,8 +374,8 @@
                                                     {{rank.nome}}
                                                     </a> 
                                                 </td>
-                                                <td>{{rank.totalpontos}}</td>
-                                                <td>{{rank.totalpontosganhoextra}}</td>
+                                                <td>{{rank?.totalpontos}}</td>
+                                                <td>{{rank?.totalpontosganhoextra}}</td>
                                                 <td>{{rank.pe}}</td>
                                                 <td>{{rank.rcg}}</td>
                                                 <td>{{rank.rc}}</td>

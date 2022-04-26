@@ -5,6 +5,7 @@ export class Ranking{
     nome:string;
     url:string;
     totalpontosganho:string;
+    totalpontos:number;
     totalpontosganhoextra:string;
     pe:number;
     rcg:number;

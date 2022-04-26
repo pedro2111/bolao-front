@@ -113,7 +113,8 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
         this.usuarioId = param.get('IdUsuarioVisitado');
         this.usuarioVisita = param.get('IdUsuarioVisitado');
 
-      }      
+      } 
+
         this.bolaoId = param.get('id');
         this.listarParticipantes(this.bolaoId);
         this.listarBolao(this.bolaoId);
@@ -121,7 +122,7 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
         this.listarCriteriosBolao(this.bolaoId);
         
 
-      this.listarPalpitesExtra(this.bolaoId,this.usuarioId);
+        this.listarPalpitesExtra(this.bolaoId,this.usuarioId);
       
     });
   
@@ -138,6 +139,10 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
   }
   changeTab(index){
     this.tabselected = index;
+    if(index === 1){
+      //this.listarRanking(this.bolaoId);
+    }
+    
   }
 
   listarBolao(bolaoId){
@@ -220,21 +225,22 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
     
     this.bolaoService.listarRanking(bolaoId).subscribe(
       (res) => {
-        this.ranking = res
-        
-      }, (err) => {
-        console.log(err)
-      }
-    );
-    this.bolaoService.listarRankingExtra(bolaoId).subscribe(
+        this.ranking = res,
+        this.bolaoService.listarRankingExtra(bolaoId).subscribe(
       (res) => {
-        this.rankingExtra = res;
+        this.rankingExtra = res,
         this.buildRanking();
         
       }, (err) => {
         console.log(err)
       }
+    )
+        
+      }, (err) => {
+        console.log(err)
+      }
     );
+    
   }
   listarParticipantes(bolaoId){
     
@@ -273,6 +279,7 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
   buildRanking(){
 
     if(this.rankingExtra.length > 0){
+
       for(let i in this.ranking){
         this.rankingExtra.forEach((re) => {
           if(this.ranking[i].nome === re.nome){
@@ -295,7 +302,7 @@ export class DetalheBolaoComponent implements OnInit, AfterViewInit {
       for(let i in this.ranking){
         
         this.ranking[i]['totalpontos'] = parseInt(this.ranking[i].totalpontosganho);
-        this.ranking[i]['totalpontosganhoextra'] = '0'
+        this.ranking[i]['totalpontosganhoextra'] = '0';
       }
       this.ranking.sort((a,b) => {
           
